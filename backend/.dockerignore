@@ -1,0 +1,15 @@
+# Ignore system-specific files and directories
+.dockerignore
+.docker
+.git
+.gitignore
+.vscode
+.idea
+
+# Ignore project-specific files and directories
+*.pyc
+*.pyo
+__pycache__
+node_modules
+venv
+.env
