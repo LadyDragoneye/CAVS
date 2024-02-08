@@ -19,5 +19,6 @@ The new users are currently being save to the default databse which is SQLite bu
 
 After cloning the repository, switch to the frontend directory and run `npm install`
 Then `docker-compose up --build` 
+Then after that you only need to run `docker-compose up` when you want to start it up again
 
-Now the fronend should be served locally on port 3000, and backend on port 8000
+Now the fronend should be served locally on port 3000, and backend on port 8000 and all will be formatted on save!
