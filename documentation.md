@@ -21,6 +21,6 @@ To build the docker container run `docker build -t (name the docker image here) 
 
 To run the dontainer `docker run -d -p 8000:8000 --name (name container here) (docker image name here)`
 
-Make sure to change the ports you set for the frontend and backend so they dont conflict with each other, for example when you run the frontend and backend containers do 
+Make sure to change the ports you set for the frontend and backend so they dont conflict with each other, for example when you run the frontend and backend containers:
 `docker run -d -p 8000:8000 --name backendContainer backend`
 `docker run -d -p 3000:3000 --name frontendContainer frontend`
