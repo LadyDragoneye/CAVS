@@ -17,10 +17,7 @@ as well as corseheaders to middleware and dictionaries
 
 The new users are currently being save to the default databse which is SQLite but it looks pretty easy to implement mysql or whatever we're going to use in settings.py
 
-To build the docker container run `docker build -t (name the docker image here) .` make sure to put the period at the end
+After cloning the repository, switch to the frontend directory and run `npm install`
+Then `docker-compose up --build` 
 
-To run the dontainer `docker run -d -p 8000:8000 --name (name container here) (docker image name here)`
-
-Make sure to change the ports you set for the frontend and backend so they dont conflict with each other, for example when you run the frontend and backend containers:
-`docker run -d -p 8000:8000 --name backendContainer backend`
-`docker run -d -p 3000:3000 --name frontendContainer frontend`
+Now the fronend should be served locally on port 3000, and backend on port 8000
