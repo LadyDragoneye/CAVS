@@ -1,5 +1,8 @@
-# Feb 7
+Make sure before pushing to the repo to run `docker-compose up --build` pls
 
+
+
+# Feb 7 -Brooks
 Connecting frontend to backend using axios and django REST framework
 prompt the user to input name and department
 `Make sure to run npm run build before starting react app or else it wont start'
@@ -16,6 +19,9 @@ as well as corseheaders to middleware and dictionaries
 `CORS_ORIGIN_ALLOW_ALL` which is used to tell the browser that our web app is running at one origin.
 
 The new users are currently being save to the default databse which is SQLite but it looks pretty easy to implement mysql or whatever we're going to use in settings.py
+
+
+# Feb 8 -Brooks
 
 After cloning the repository, switch to the frontend directory and run `npm install`
 Then `docker-compose up --build` 
