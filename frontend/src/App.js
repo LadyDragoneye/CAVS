@@ -1,7 +1,36 @@
-import React, { Component } from 'react';  // Import React and Component from 'react' module
-import axios from 'axios';  // Import axios for making HTTP requests
+import React from 'react'; // Import React and Component from 'react' module
+// import axios from 'axios';  // Import axios for making HTTP requests
+import {
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
+import Navbar from "./components/";
+import About from "./pages/about/about";
+import Contact from "./pages/contact/contact";
+import Home from "./pages/home/home";
+import Login from "./pages/login/login";
+import SignUp from "./pages/signup/signup";
 
+function App() {
+  return (
+      <Router>
+          <Navbar />
+          <Routes>
+              <Route exact path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/sign-up" element={<SignUp />} />
+              <Route path="/login" element={<Login/>} />
+          </Routes>
+      </Router>
+  );
+}
+export default App;  // Export App component as default export
+
+/*
 class App extends Component {  // Define a new class component named App
+  
   state = {  // Initialize component state
     details: [],  // Initialize 'details' state as an empty array
     error: null  // Initialize 'error' state as null
@@ -22,14 +51,14 @@ class App extends Component {  // Define a new class component named App
 
     return (  // JSX markup for component UI
       <div>
-        <header>Data Generated from Django</header>  {/* Header */}
-        <hr />  
+        <header>Data Generated from Django</header>
+        <hr />
         {error ? (  // Conditionally render error message if 'error' state is not null
           <div>Error: {error}</div>
         ) : (  // Render list of details if no error
           <ul>
             {details.map((item, index) => (  // Map through 'details' array and render each item
-              <li key={index}>  {/* Use index as key for each list item */}
+              <li key={index}>
                 <strong>Employee:</strong> {item.employee}, <strong>Department:</strong> {item.department}
               </li>
             ))}
@@ -39,5 +68,6 @@ class App extends Component {  // Define a new class component named App
     );
   }
 }
+*/
 
-export default App;  // Export App component as default export
+// Filename - App.js
