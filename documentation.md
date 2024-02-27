@@ -28,6 +28,7 @@ After cloning the repository, switch to the frontend directory and run `npm inst
     NOTE: Need to run:
         npm i react-router-dom --save styled-components
         npm install react-icons --save
+        npm install bootstrap
 # Feb 8 - Brooks
 Then `docker-compose up --build` 
 Then after that you only need to run `docker-compose up` when you want to start it up again
