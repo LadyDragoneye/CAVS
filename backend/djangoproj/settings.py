@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import boto3
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,8 +24,12 @@ SECRET_KEY = 'django-insecure-2k1v-ir_9un@-_sh&p=lnocm*-jdlb3mp6z7h7z035p#t2vqp$
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+]
+CORS_ALLOW_CREDENTIALS = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -43,6 +47,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # Add this line
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,14 +55,25 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-]
+    
 
+]
+CSRF_COOKIE_NAME = 'csrftoken'
+
+CSRF_COOKIE_DOMAIN = 'localhost'  # Adjust this if needed
+CSRF_HEADER_NAME = 'HTTP_X_CSRFTOKEN'
 
 REST_FRAMEWORK = {"DEFAULT_PERMISSION_CLASSES": [
-    "rest_framework.permissions.AllowAny"]}
+    "rest_framework.permissions.IsAuthenticated"]}
+
+
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+
 
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+]
 
 ROOT_URLCONF = 'djangoproj.urls'
 
@@ -82,6 +98,23 @@ WSGI_APPLICATION = 'djangoproj.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+# AWS Configuration
+
+
+AWS_REGION = 'us-east-1'  # Set your AWS region
+AWS_ACCESS_KEY_ID = 'AKIA5FTZAL2RGWG3SL77'  # Set your AWS access key ID
+AWS_SECRET_ACCESS_KEY = 'd6HpxIXF2Wfc5xebpeHoDGGr5N2ZutIu24CcxKVO'  # Set your AWS secret access key
+DYNAMODB_TABLE_NAME = 'Users'  # Set your DynamoDB table name
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+]
+# Initialize Boto3 DynamoDB client
+dynamodb_client = boto3.client(
+    'dynamodb',
+    region_name=AWS_REGION,
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+)
 
 DATABASES = {
     'default': {

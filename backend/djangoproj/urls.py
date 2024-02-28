@@ -13,13 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.urls import path
-from app.views import *
 
 
-# set local host to port 8000 (default port for django) to be endpoint for our reactView class
+from django.urls import path
+from app.views import print_items, register
+from app.views import get_csrf_token
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', ReactView.as_view(), name="anything"),
+    path('', print_items, name='print_items'),
+    path('register/', register, name='register'),
+    path('csrf/', get_csrf_token, name='get_csrf_token'),
 ]

@@ -13,7 +13,7 @@ COPY . .
 
 # Install Python dependencies including Django and corsheaders
 RUN pip install --no-cache-dir django django-cors-headers djangorestframework
-
+RUN pip install boto3
 # Expose port 8000 to the outside world
 EXPOSE 8000
 

@@ -4,7 +4,7 @@ from . models import *
 
 class ReactSerializer(serializers.ModelSerializer):
     class Meta:
-        model = React # Specify the model to be serialized
+        model = Item # Specify the model to be serialized
         fields = ['employee', 'department'] # Specify the fields to include in the serialization
 
 
