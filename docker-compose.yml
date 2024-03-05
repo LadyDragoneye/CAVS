@@ -10,6 +10,8 @@ services:
       - ./frontend:/app  # mount the frontend directory to /app in the container
     depends_on:
       - backend
+    environment:
+      - WATCHPACK_POLLING=true
 
   backend:
     build:
@@ -18,3 +20,7 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app  # mount the backend directory to /app in the container
+    environment:
+      - WATCHPACK_POLLING=true
+  
+

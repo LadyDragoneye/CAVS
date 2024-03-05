@@ -1,5 +1,5 @@
-import React from 'react'; // Import React and Component from 'react' module
-// import axios from 'axios';  // Import axios for making HTTP requests
+import axios from 'axios'; // Import axios for making HTTP requests
+import React, { Component } from 'react'; // Import React and Component from 'react' module
 import {
   Route,
   BrowserRouter as Router,
@@ -12,23 +12,6 @@ import Home from "./pages/home/home";
 import Login from "./pages/login/login";
 import SignUp from "./pages/signup/signup";
 
-function App() {
-  return (
-      <Router>
-          <Navbar />
-          <Routes>
-              <Route exact path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/sign-up" element={<SignUp />} />
-              <Route path="/login" element={<Login/>} />
-          </Routes>
-      </Router>
-  );
-}
-export default App;  // Export App component as default export
-
-/*
 class App extends Component {  // Define a new class component named App
   
   state = {  // Initialize component state
@@ -47,10 +30,28 @@ class App extends Component {  // Define a new class component named App
   }
 
   render() {  // Render method to render component UI
-    const { details, error } = this.state;  // Destructure 'details' and 'error' from component state
-
     return (  // JSX markup for component UI
-      <div>
+      <Router>
+          <Navbar />
+          <Routes>
+              <Route exact path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/sign-up" element={<SignUp />} />
+              <Route path="/login" element={<Login />} />
+          </Routes>
+      </Router>
+    );
+  }
+}
+
+export default App;  // Export App component as default export
+
+
+
+// Filename - App.js
+/*
+<div>
         <header>Data Generated from Django</header>
         <hr />
         {error ? (  // Conditionally render error message if 'error' state is not null
@@ -65,9 +66,4 @@ class App extends Component {  // Define a new class component named App
           </ul>
         )}
       </div>
-    );
-  }
-}
 */
-
-// Filename - App.js
