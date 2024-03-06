@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend  # path to the directory containing the Node.js Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app  # mount the frontend directory to /app in the container
+    depends_on:
+      - backend
+    environment:
+      - WATCHPACK_POLLING=true
+
+  backend:
+    build:
+      context: ./backend  # path to the directory containing the Python Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app  # mount the backend directory to /app in the container
+    environment:
+      - WATCHPACK_POLLING=true
+  
+

@@ -24,7 +24,15 @@ The new users are currently being save to the default databse which is SQLite bu
 # Feb 8 -Brooks
 
 After cloning the repository, switch to the frontend directory and run `npm install`
+# Feb 8 - Eric
+    NOTE: Need to run:
+        npm i react-router-dom --save styled-components
+        npm install react-icons --save
+        npm install bootstrap
+# Feb 8 - Brooks
 Then `docker-compose up --build` 
 Then after that you only need to run `docker-compose up` when you want to start it up again
 
-Now the fronend should be served locally on port 3000, and backend on port 8000 and all will be formatted on save!
+
+
+Now the front end should be served locally on port 3000, and backend on port 8000 and all will be formatted on save!
