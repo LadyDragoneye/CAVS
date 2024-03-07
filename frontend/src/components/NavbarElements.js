@@ -26,6 +26,10 @@ export const NavLink = styled(Link)`
     &.active {
         color: #4d4dff;
     }
+    &:hover {
+        transition: .2s all ease-in-out;
+        color: blue;
+    }
 `;
  
 export const Bars = styled(FaBars)`
@@ -50,7 +54,7 @@ export const NavMenu = styled.div`
     /* margin-right: 24px; */
     /* Third Nav */
     /* width: 100vw;
-white-space: nowrap; */
+    white-space: nowrap; */
     @media screen and (max-width: 768px) {
         display: none;
     }

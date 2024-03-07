@@ -1,7 +1,8 @@
 // Filename - pages/contact.js
  
 import React from "react";
- 
+import './contact.css';
+
 const Contact = () => {
     return (
         <div>
