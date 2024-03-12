@@ -9,7 +9,9 @@ const Navbar = () => {
     return (
         <>
             <Nav>
-            <img src={logo} alt="CAVS logo" height={125} width={125}></img>
+            <a href='/'>
+                <img src={logo} alt="CAVS logo" height={125} width={125}></img>
+            </a>
                 <NavMenu>
                     <NavLink to="/" activeStyle>
                         Home
@@ -25,6 +27,9 @@ const Navbar = () => {
                     </NavLink>
                     <NavLink to="/sign-up" activeStyle>
                         Sign Up
+                    </NavLink>
+                    <NavLink to="/Cal" activeStyle>
+                        Calendar
                     </NavLink>
                 </NavMenu>
             </Nav>

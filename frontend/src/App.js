@@ -11,6 +11,7 @@ import Contact from "./pages/contact/contact";
 import Home from "./pages/home/home";
 import Login from "./pages/login/login";
 import SignUp from "./pages/signup/signup";
+import Cal from "./pages/calendar/Cal";
 
 class App extends Component {  // Define a new class component named App
   
@@ -39,6 +40,7 @@ class App extends Component {  // Define a new class component named App
               <Route path="/contact" element={<Contact />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/cal" element={<Cal />} />
           </Routes>
       </Router>
     );

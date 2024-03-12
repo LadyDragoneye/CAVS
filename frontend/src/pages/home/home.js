@@ -1,6 +1,9 @@
 import React from "react";
 import './home.css';
+import Button from 'react-bootstrap/Button';
+
 const Home = () => {
+   
     return (
         <div>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"></link>
@@ -11,6 +14,7 @@ const Home = () => {
                     </h1>
                 </div>
             </div>
+           <Button href='/Cal'>Calendar</Button>
         </div>
     );
 };
