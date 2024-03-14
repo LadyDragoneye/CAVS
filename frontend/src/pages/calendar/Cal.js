@@ -10,7 +10,7 @@ export default function CalendarGfg() {
  
     return (
         <div>
-            <h1>Calendar - GeeksforGeeks</h1>
+            <h1>Calendar</h1>
             <Calendar
                 onChange={onChange}
                 value={value}
