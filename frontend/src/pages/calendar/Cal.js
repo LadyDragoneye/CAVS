@@ -1,12 +1,20 @@
 
 // Filename - pages/Cal.js
  
-import React from "react";
+import React, { useState } from 'react';
+import Calendar from 'react-calendar';
+
+
+export default function CalendarGfg() {
+    const [value, onChange] = useState(new Date());
  
-const Cal = () => {
     return (
-       <h1>Hello World</h1>
+        <div>
+            <h1>Calendar - GeeksforGeeks</h1>
+            <Calendar
+                onChange={onChange}
+                value={value}
+            />
+        </div>
     );
-};
- 
-export default Cal;
+}

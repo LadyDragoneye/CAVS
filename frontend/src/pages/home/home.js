@@ -14,7 +14,9 @@ const Home = () => {
                     </h1>
                 </div>
             </div>
-           <Button href='/Cal'>Calendar</Button>
+            <div class="text-center">
+           <Button variant="warning" href='/Cal' size="lg ">Calendar</Button>
+           </div>
         </div>
     );
 };
