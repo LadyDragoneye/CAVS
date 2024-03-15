@@ -1,10 +1,12 @@
 // Filename - "./components/Navbar.js
  
-import React from "react";
+import React, {useContext} from "react";
 import { Nav, NavLink, NavMenu } from "./NavbarElements";
+import AuthContext from "../context/AuthContext";
  
 const Navbar = () => {
     return (
+        
         <>
         <link rel="preconnect" href="https://fonts.googleapis.com"></link>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin></link>
