@@ -1,5 +1,8 @@
 from django.contrib import admin
 from app.models import User,Profile
+from .models import Note
+
+admin.site.register(Note)
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ['username', 'email']
