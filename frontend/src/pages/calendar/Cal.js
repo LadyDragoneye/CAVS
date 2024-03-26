@@ -1,20 +1,18 @@
 
 // Filename - pages/Cal.js
- 
-import React, { useState } from 'react';
-import Calendar from 'react-calendar';
+import React from 'react';
+import './CalStyle.css';
 
+import { Inject, ScheduleComponent, Day, Week, WorkWeek, Month, Agenda } from '@syncfusion/ej2-react-schedule';
 
-export default function CalendarGfg() {
-    const [value, onChange] = useState(new Date());
- 
+const Cal = () => {
     return (
         <div>
-            <h1>Calendar</h1>
-            <Calendar
-                onChange={onChange}
-                value={value}
-            />
+            <ScheduleComponent>
+                <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
+            </ScheduleComponent>
         </div>
-    );
+    )
 }
+
+export default Cal;
