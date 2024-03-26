@@ -25,6 +25,7 @@ export const NavLink = styled(Link)`
     cursor: pointer;
     &.active {
         color: #5ea5e0;
+        text-decoration: none;
     }
     &:hover {
         transition: .2s all ease-in-out;
@@ -34,7 +35,8 @@ export const NavLink = styled(Link)`
     }
     &:hover {
         transition: .2s all ease-in-out;
-        color: blue;
+        color: white;
+        text-decoration: none;
     }
 `;
  

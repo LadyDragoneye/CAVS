@@ -1,6 +1,5 @@
 // Filename - pages/signup.js
 import React from "react";
-import './signup.css';
 
 const SignUp = () => {
     return (

@@ -1,15 +1,15 @@
 // Filename - pages/contact.js
  
 import React from "react";
-import './contact.css';
+<link href="styles.css" rel="stylesheet"></link>
+
+//import './contact.css';
 
 const Contact = () => {
     return (
-        <div>
-            <h1>
-                Mail us on 
-                feedback@geeksforgeeks.org
-            </h1>
+        <div class="container p-5 my-5 bg-primary text-white">
+            <h1>Contact Us</h1>
+            
         </div>
     );
 };
