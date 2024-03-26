@@ -5,7 +5,7 @@ services:
     build:
       context: ./frontend  # path to the directory containing the Node.js Dockerfile
     ports:
-      - "3000:3000"
+      - "3001:3000"
     volumes:
       - ./frontend:/app  # mount the frontend directory to /app in the container
     depends_on:
@@ -17,7 +17,7 @@ services:
     build:
       context: ./backend  # path to the directory containing the Python Dockerfile
     ports:
-      - "8000:8000"
+      - "8001:8000"
     volumes:
       - ./backend:/app  # mount the backend directory to /app in the container
     environment:
