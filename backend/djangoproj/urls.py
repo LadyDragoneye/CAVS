@@ -14,12 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from app.views import *
 
 
 # set local host to port 8000 (default port for django) to be endpoint for our reactView class
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', ReactView.as_view(), name="anything"),
+    path('app/', include("app.urls")),
+    # path('', ReactView.as_view(), name="anything"),
 ]

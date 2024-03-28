@@ -1,0 +1,7 @@
+.jumbotron {
+    background-color: #F5F5DC;
+    margin: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
