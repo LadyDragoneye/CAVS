@@ -22,7 +22,7 @@ export const AuthProvider = ({children}) => {
     let loginUser = async (e )=> {
         e.preventDefault()
         console.log('Form submitted')
-        let response = await fetch('http://localhost:8001/app/token/', {
+        let response = await fetch('http://localhost:8000/app/token/', {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -49,7 +49,7 @@ export const AuthProvider = ({children}) => {
         console.log('Sign-up form submitted');
     
         // Fetch API call to sign up the user
-        let response = await fetch('http://localhost:8001/app/register/', {
+        let response = await fetch('http://localhost:8000/app/register/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -90,7 +90,7 @@ export const AuthProvider = ({children}) => {
     }
     let updateToken = async ()=> {
 
-        let response = await fetch('http://localhost:8001/app/token/refresh/', {
+        let response = await fetch('http://localhost:8000/app/token/refresh/', {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
