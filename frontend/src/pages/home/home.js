@@ -15,7 +15,7 @@ const Home = () => {
                 </div>
             </div>
             <div class="text-center">
-           <Button variant="warning" href='/Cal' size="lg ">Calendar</Button>
+           <Button href='/Cal' size="lg ">Calendar</Button>
            </div>
         </div>
     );
