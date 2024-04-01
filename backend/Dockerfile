@@ -12,10 +12,11 @@ WORKDIR /app
 COPY . .
 
 # Install Python dependencies including Django and corsheaders
-RUN pip install --no-cache-dir django django-cors-headers djangorestframework
+RUN pip install --no-cache-dir django django-cors-headers djangorestframework djangorestframework-simplejwt Pillow django-jazzmin mysqlclient
 
 # Expose port 8000 to the outside world
 EXPOSE 8000
 
 # Start the Django development server
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+

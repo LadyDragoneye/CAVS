@@ -1,14 +1,25 @@
-
 // Filename - pages/signup.js
- 
-import React from "react";
- 
+
+import React, {useContext} from 'react'
+import AuthContext from '../../context/AuthContext'
+
+
+
 const SignUp = () => {
+    let {signupUser} = useContext(AuthContext)
     return (
         <div>
-            <h1>Sign Up Successful</h1>
+            <form onSubmit={signupUser}>
+                <input type="text" name="email" placeholder="Enter Email" />
+                <input type="text" name="username" placeholder="Username" />
+
+                <input type="password" name="password" placeholder="Password" />
+                <input type="password" name="password2" placeholder="Password2" />
+
+                <input type="submit"/>
+            </form>
         </div>
-    );
-};
- 
-export default SignUp;
+    )
+}
+
+export default SignUp
