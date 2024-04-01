@@ -5,7 +5,7 @@ Make sure before pushing to the repo to run `docker-compose up --build` pls
 # Feb 7 -Brooks
 Connecting frontend to backend using axios and django REST framework
 prompt the user to input name and department
-`Make sure to run npm run build before starting react app or else it wont start'
+Make sure to run `npm run build` before starting react app or else it wont start
 created react app with `create-react-app` start it with `npm start`
 
 created django app with `django-admin startproject myproject`
