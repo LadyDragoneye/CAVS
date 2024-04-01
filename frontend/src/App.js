@@ -11,6 +11,7 @@ import Contact from "./pages/contact/contact";
 import Home from "./pages/home/home";
 import Login from "./pages/login/login";
 import SignUp from "./pages/signup/signup";
+import Cal from "./pages/calendar/Cal";
 import PrivateRoutes from './utils/PrivateRoutes'
 import { AuthProvider } from './context/AuthContext'
 
@@ -38,7 +39,8 @@ class App extends Component {  // Define a new class component named App
               <Route path="/contact" element={<Contact />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/login" element={<Login />} />
-            </Routes>
+              <Route path="/cal" element={<Cal />} />
+          </Routes>
           </AuthProvider>
 
       </Router>

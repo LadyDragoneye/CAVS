@@ -3,7 +3,7 @@
 import React, {useContext} from "react";
 import { Nav, NavLink, NavMenu } from "./NavbarElements";
 import AuthContext from "../context/AuthContext";
-// import logo from './CAVSlogo.png';
+import logo from './CAVSlogo.png';
 
  
 const Navbar = () => {
@@ -11,7 +11,9 @@ const Navbar = () => {
         
         <>
             <Nav>
-            {/* <img src={logo} alt="CAVS logo" height={125} width={125}></img> */}
+            <a href='/'>
+                <img src={logo} alt="CAVS logo" height={125} width={125}></img>
+            </a>
                 <NavMenu>
                     <NavLink to="/" activeStyle>
                         Home
@@ -27,6 +29,9 @@ const Navbar = () => {
                     </NavLink>
                     <NavLink to="/sign-up" activeStyle>
                         Sign Up
+                    </NavLink>
+                    <NavLink to="/Cal" activeStyle>
+                        Calendar
                     </NavLink>
                 </NavMenu>
             </Nav>
