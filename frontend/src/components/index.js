@@ -1,8 +1,7 @@
 // Filename - "./components/Navbar.js
  
-import React, {useContext} from "react";
+import React from "react";
 import { Nav, NavLink, NavMenu } from "./NavbarElements";
-import AuthContext from "../context/AuthContext";
  
 const Navbar = () => {
     return (
