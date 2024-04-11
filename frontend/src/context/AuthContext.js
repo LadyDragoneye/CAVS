@@ -1,147 +1,147 @@
-import { useNavigate } from 'react-router-dom';
-import {createContext, useState, useEffect} from "react";
-import { jwtDecode } from 'jwt-decode';
-const swal = require('sweetalert2')
+import { createContext, useState, useEffect } from "react";
+import jwt_decode from "jwt-decode";
+import { useNavigate } from 'react-router-dom'
+const AuthContext = createContext()
 
-const AuthContext = createContext();
+// 1:20:23
 
-export default AuthContext
+export default AuthContext;
 
-export const AuthProvider = ({ children }) => {
-    const [authTokens, setAuthTokens] = useState(() =>
-        localStorage.getItem("authTokens")
-            ? JSON.parse(localStorage.getItem("authTokens"))
-            : null
-    );
+
+export const AuthProvider = ({children}) => {
+
+    let [authTokens, setAuthTokens] = useState(()=> localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
+    let [user, setUser] = useState(()=> localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
+    let [loading, setLoading] = useState(true)
+
+    let history = useNavigate()
+
+
+
     
-
-    const [user, setUser] = useState(() => 
-        localStorage.getItem("authTokens")
-            ? jwtDecode(localStorage.getItem("authTokens"))
-            : null
-    );
-
-
-    const [loading, setLoading] = useState(true);
-
-    const navigate = useNavigate();
-    const loginUser = async (email, password) => {
-        const response = await fetch("http://localhost:8000/app/token/", {
-            method: "POST",
+    let loginUser = async (e )=> {
+        e.preventDefault()
+        console.log('Form submitted')
+        let response = await fetch('http://localhost:8000/app/token/', {
+            method:'POST',
             headers:{
-                "Content-Type":"application/json"
+                'Content-Type':'application/json'
             },
-            body: JSON.stringify({
-                email, password
-            })
+            body:JSON.stringify({email:e.target.email.value, password:e.target.password.value})
         })
-        const data = await response.json()
-        console.log(data);
+        let data = await response.json()
 
         if(response.status === 200){
-            console.log("Logged In");
             setAuthTokens(data)
-            setUser(jwtDecode(data.access))
-            localStorage.setItem("authTokens", JSON.stringify(data))
-            navigate("/")
-            swal.fire({
-                title: "Login Successful",
-                icon: "success",
-                toast: true,
-                timer: 6000,
-                position: 'top-right',
-                timerProgressBar: true,
-                showConfirmButton: false,
-            })
-
-        } else {    
-            console.log(response.status);
-            console.log("there was a server issue");
-            swal.fire({
-                title: "Username or passowrd does not exists",
-                icon: "error",
-                toast: true,
-                timer: 6000,
-                position: 'top-right',
-                timerProgressBar: true,
-                showConfirmButton: false,
-            })
+            console.log('Access token:', data.access); // Logging the access token
+            setUser(jwt_decode(data.access))
+            localStorage.setItem('authTokens', JSON.stringify(data))
+            history('/')
+        }else{
+            alert('Something went wrong!')
         }
+
     }
 
-    const registerUser = async (email, username, password, password2) => {
-        const response = await fetch("http://localhost:8000/app/register/", {
-            method: "POST",
+    // signupUser
+    let signupUser = async (e) => {
+        e.preventDefault();
+        console.log('Sign-up form submitted');
+    
+        // Fetch API call to sign up the user
+        let response = await fetch('http://localhost:8000/app/register/', {
+            method: 'POST',
             headers: {
-                "Content-Type":"application/json"
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email, username, password, password2
+                email:e.target.email.value,
+                username:e.target.username.value,
+                password:e.target.password.value,
+                password2: e.target.password2.value, // Update field name here
             })
-        })
-        if(response.status === 201){
-            navigate("/login")
-            swal.fire({
-                title: "Registration Successful, Login Now",
-                icon: "success",
-                toast: true,
-                timer: 6000,
-                position: 'top-right',
-                timerProgressBar: true,
-                showConfirmButton: false,
-            })
+            
+        });
+        console.log('posted');
+
+        let data = await response.json();
+    
+        if (response.status === 201) { // Assuming status code 201 for successful signup
+            console.log('User signed up successfully:', data);
+    
+            // You may handle success cases like redirecting to login page or any other actions
+            // For now, let's just log the response and display an alert
+            alert('User signed up successfully!');
+            history('/login');
         } else {
-            console.log(response.status);
-            console.log("there was a server issue");
-            swal.fire({
-                title: "An Error Occured " + response.status,
-                icon: "error",
-                toast: true,
-                timer: 6000,
-                position: 'top-right',
-                timerProgressBar: true,
-                showConfirmButton: false,
-            })
+            console.error('Error signing up user:', data);
+            alert('Something went wrong during sign-up!');
         }
     }
 
-    const logoutUser = () => {
+
+
+    let logoutUser = () => {
         setAuthTokens(null)
         setUser(null)
-        localStorage.removeItem("authTokens")
-        navigate("/login")
-        swal.fire({
-            title: "YOu have been logged out...",
-            icon: "success",
-            toast: true,
-            timer: 6000,
-            position: 'top-right',
-            timerProgressBar: true,
-            showConfirmButton: false,
+        localStorage.removeItem('authTokens')
+        history('/login')
+
+    }
+    let updateToken = async ()=> {
+
+        let response = await fetch('http://localhost:8000/app/token/refresh/', {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({'refresh':authTokens?.refresh})
         })
-    }
 
-    const contextData = {
-        user, 
-        setUser,
-        authTokens,
-        setAuthTokens,
-        registerUser,
-        loginUser,
-        logoutUser,
-    }
+        let data = await response.json()
 
-    useEffect(() => {
-        if (authTokens) {
-            setUser(jwtDecode(authTokens.access))
+        if (response.status === 200){
+            setAuthTokens(data)
+            setUser(jwt_decode(data.access))
+            localStorage.setItem('authTokens', JSON.stringify(data))
+        }else{
+            logoutUser()
         }
-        setLoading(false)
+
+        if(loading){
+            setLoading(false)
+        }
+    }
+
+
+    let contextData = {
+        user:user,
+        authTokens:authTokens,
+        loginUser:loginUser,
+        signupUser:signupUser,
+        // logoutUser:logoutUser, // need to add logout button
+    }
+
+    useEffect(()=> {
+
+        if(loading){
+            updateToken()
+        }
+
+        let fourMinutes = 1000 * 60 * 4
+
+        let interval =  setInterval(()=> {
+            if(authTokens){
+                updateToken()
+            }
+        }, fourMinutes)
+        return ()=> clearInterval(interval)
+
     }, [authTokens, loading])
 
-    return (
-        <AuthContext.Provider value={contextData}>
-            {loading ? null : children}
+    return(
+        <AuthContext.Provider value={contextData} >
+            {children}
         </AuthContext.Provider>
     )
-
 }
