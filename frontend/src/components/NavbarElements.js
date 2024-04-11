@@ -24,7 +24,13 @@ export const NavLink = styled(Link)`
     height: 100%;
     cursor: pointer;
     &.active {
-        color: #4d4dff;
+        color: #5ea5e0;
+    }
+    &:hover {
+        transition: .2s all ease-in-out;
+        color: #5ea5e0;
+        background-color: #234d70;
+        border-radius: 25px;
     }
 `;
  
