@@ -25,7 +25,11 @@ const Navbar = () => {
                     <NavLink to="/sign-up" activeStyle>
                         Sign Up
                     </NavLink>
+<<<<<<< HEAD
                     <NavLink to="/Cal" activeStyle>
+=======
+                         <NavLink to="/Cal" activeStyle>
+>>>>>>> 649dbf53cfcd7d093e52c571ce8ee81ce9c1a004
                         Calendar
                     </NavLink>
                 </NavMenu>
