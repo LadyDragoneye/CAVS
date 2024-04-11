@@ -1,4 +1,3 @@
-import axios from 'axios'; // Import axios for making HTTP requests
 import React, { Component } from 'react'; // Import React and Component from 'react' module
 import {
   Route,
