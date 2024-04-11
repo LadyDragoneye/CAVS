@@ -5,8 +5,9 @@ import {
   Routes,
 } from "react-router-dom";
 import Navbar from "./components/";
-import About from "./pages/about/about";
 import Contact from "./pages/contact/contact";
+import FAQ from "./pages/FAQ/FAQ";
+
 import Home from "./pages/home/home";
 import Login from "./pages/login/login";
 import SignUp from "./pages/signup/signup";
@@ -34,7 +35,8 @@ class App extends Component {  // Define a new class component named App
                 <Route element={<Contact />} path="/contact"/>
               </Route>
               <Route exact path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
+              <Route path="/FAQ" element={<FAQ />} />
+
               <Route path="/contact" element={<Contact />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/login" element={<Login />} />
