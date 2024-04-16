@@ -28,6 +28,7 @@ class App extends Component {  // Define a new class component named App
 
     // Check if user is authenticated
     const isAuthenticated = user !== null && user !== undefined; // Adjust this condition based on your authentication logic
+    
     if (isAuthenticated){
       return (  // JSX markup for component UI
         <Router>
