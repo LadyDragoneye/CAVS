@@ -1,6 +1,6 @@
-import { createContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
-import { useNavigate } from 'react-router-dom'
+import { createContext, useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 const AuthContext = createContext()
 
 // 1:20:23
@@ -16,9 +16,6 @@ export const AuthProvider = ({children}) => {
 
     let history = useNavigate()
 
-
-
-    
     let loginUser = async (e )=> {
         e.preventDefault()
         console.log('Form submitted')

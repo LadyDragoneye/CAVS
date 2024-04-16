@@ -8,7 +8,8 @@ import Navbar from "./components/";
 import FAQ from "./pages/FAQ/FAQ";
 import Contact from "./pages/contact/contact";
 
-import { AuthProvider } from './context/AuthContext';
+import AuthContext, { AuthProvider } from './context/AuthContext';
+import Account from "./pages/account/account";
 import Cal from "./pages/calendar/Cal";
 import Home from "./pages/home/home";
 import Login from "./pages/login/login";
@@ -23,27 +24,47 @@ class App extends Component {  // Define a new class component named App
   };
 
   render() {  // Render method to render component UI
-    return (  // JSX markup for component UI
+    const { user } = AuthContext
+
+    // Check if user is authenticated
+    const isAuthenticated = user !== null && user !== undefined; // Adjust this condition based on your authentication logic
+    if (isAuthenticated){
+      return (  // JSX markup for component UI
+        <Router>
+          <Navbar />
+          <AuthProvider>
+            <Routes>
+              <Route exact path="/" element={<Home />} />
+              <Route path="/FAQ" element={<FAQ />} />
+
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/account" element={<Account />} />
+              <Route path="/cal" element={<Cal />} />
+          </Routes>
+          </AuthProvider>
+        </Router>
+      );
+    } else {
+      return (
       <Router>
           <Navbar />
           <AuthProvider>
             <Routes>
               <Route element={<PrivateRoutes />}>
-                <Route element={<Home />} path="/" exact/>
-                <Route element={<Contact />} path="/contact"/>
+                <Route element={<Cal />} path="/cal"/>
+                <Route element={<Account />} path="/account"/>
               </Route>
               <Route exact path="/" element={<Home />} />
               <Route path="/FAQ" element={<FAQ />} />
-
               <Route path="/contact" element={<Contact />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/cal" element={<Cal />} />
           </Routes>
           </AuthProvider>
+        </Router>
+      )
+    }
 
-      </Router>
-    );
   }
 }
 
