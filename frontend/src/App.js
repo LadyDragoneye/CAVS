@@ -5,15 +5,15 @@ import {
   Routes,
 } from "react-router-dom";
 import Navbar from "./components/";
-import Contact from "./pages/contact/contact";
 import FAQ from "./pages/FAQ/FAQ";
+import Contact from "./pages/contact/contact";
 
+import { AuthProvider } from './context/AuthContext';
+import Cal from "./pages/calendar/Cal";
 import Home from "./pages/home/home";
 import Login from "./pages/login/login";
 import SignUp from "./pages/signup/signup";
-import Cal from "./pages/calendar/Cal";
-import PrivateRoutes from './utils/PrivateRoutes'
-import { AuthProvider } from './context/AuthContext'
+import PrivateRoutes from './utils/PrivateRoutes';
 
 class App extends Component {  // Define a new class component named App
   
@@ -28,8 +28,6 @@ class App extends Component {  // Define a new class component named App
           <Navbar />
           <AuthProvider>
             <Routes>
-            
-              
               <Route element={<PrivateRoutes />}>
                 <Route element={<Home />} path="/" exact/>
                 <Route element={<Contact />} path="/contact"/>
