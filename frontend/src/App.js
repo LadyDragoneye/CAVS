@@ -15,6 +15,7 @@ import Home from "./pages/home/home";
 import Login from "./pages/login/login";
 import SignUp from "./pages/signup/signup";
 import PrivateRoutes from './utils/PrivateRoutes';
+import PrivateRoutesAuthenticated from './utils/PrivateRoutesAuthenticated';
 
 class App extends Component {  // Define a new class component named App
   
@@ -35,9 +36,12 @@ class App extends Component {  // Define a new class component named App
           <AuthProvider>
           <Navbar />
             <Routes>
+              <Route element={<PrivateRoutesAuthenticated />}>
+                <Route element={<SignUp />} path="/sign-up"/>
+                <Route element={<Login />} path="/login"/>
+              </Route>
               <Route exact path="/" element={<Home />} />
               <Route path="/FAQ" element={<FAQ />} />
-
               <Route path="/contact" element={<Contact />} />
               <Route path="/account" element={<Account />} />
               <Route path="/cal" element={<Cal />} />
