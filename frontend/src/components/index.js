@@ -6,58 +6,56 @@ import logo from './CAVSlogo.png';
 import { Nav, NavLink, NavMenu } from "./NavbarElements";
 
 const Navbar = () => {
-    const user = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
 
     // Check if user is authenticated
-    const isAuthenticated = user !== null && user !== undefined; // Adjust this condition based on your authentication logic
+    const isAuthenticated = (user !== null && user !== undefined); // Adjust this condition based on your authentication logic
 
-    if (isAuthenticated) {
+    if (!isAuthenticated) {
         return (
-                <Nav>
-                {<img src={logo} alt="CAVS logo" height={125} width={125}></img>}
-                    <NavMenu>
-                        <NavLink to="/" activeStyle>
-                            Home
-                        </NavLink>
-                        <NavLink to="/FAQ" activeStyle>
-                            FAQ
-                        </NavLink>
-                        <NavLink to="/contact" activeStyle>
-                            Contact Us
-                        </NavLink>
-                        <NavLink to="/account" activeStyle>
-                            Account
-                        </NavLink>
-                        <NavLink to="/Cal" activeStyle>
-                            Calendar
-                        </NavLink>
-                    </NavMenu>
-                </Nav>
+            <Nav>
+            {<img src={logo} alt="CAVS logo" height={125} width={125}></img>}
+                <NavMenu>
+                    <NavLink to="/" activeStyle>
+                        Home
+                    </NavLink>
+                    <NavLink to="/FAQ" activeStyle>
+                        FAQ
+                    </NavLink>
+                    <NavLink to="/contact" activeStyle>
+                        Contact Us
+                    </NavLink>
+                    <NavLink to="/login" activeStyle>
+                        Login
+                    </NavLink>
+                    <NavLink to="/sign-up" activeStyle>
+                        Sign Up
+                    </NavLink>
+                </NavMenu>
+            </Nav>
         );
     } else {
         return (
-        <>
-        <Nav>
-                {<img src={logo} alt="CAVS logo" height={125} width={125}></img>}
-                    <NavMenu>
-                        <NavLink to="/" activeStyle>
-                            Home
-                        </NavLink>
-                        <NavLink to="/FAQ" activeStyle>
-                            FAQ
-                        </NavLink>
-                        <NavLink to="/contact" activeStyle>
-                            Contact Us
-                        </NavLink>
-                        <NavLink to="/login" activeStyle>
-                            Login
-                        </NavLink>
-                        <NavLink to="/sign-up" activeStyle>
-                            Sign Up
-                        </NavLink>
-                    </NavMenu>
-                </Nav>
-            </>
+            <Nav>
+            {<img src={logo} alt="CAVS logo" height={125} width={125}></img>}
+                <NavMenu>
+                    <NavLink to="/" activeStyle>
+                        Home
+                    </NavLink>
+                    <NavLink to="/FAQ" activeStyle>
+                        FAQ
+                    </NavLink>
+                    <NavLink to="/contact" activeStyle>
+                        Contact Us
+                    </NavLink>
+                    <NavLink to="/account" activeStyle>
+                        Account
+                    </NavLink>
+                    <NavLink to="/Cal" activeStyle>
+                        Calendar
+                    </NavLink>
+                </NavMenu>
+            </Nav>
         )
     }
 };

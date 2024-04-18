@@ -32,8 +32,8 @@ class App extends Component {  // Define a new class component named App
     if (isAuthenticated){
       return (  // JSX markup for component UI
         <Router>
-          <Navbar />
           <AuthProvider>
+          <Navbar />
             <Routes>
               <Route exact path="/" element={<Home />} />
               <Route path="/FAQ" element={<FAQ />} />
@@ -48,8 +48,8 @@ class App extends Component {  // Define a new class component named App
     } else {
       return (
       <Router>
-          <Navbar />
           <AuthProvider>
+          <Navbar />
             <Routes>
               <Route element={<PrivateRoutes />}>
                 <Route element={<Cal />} path="/cal"/>
