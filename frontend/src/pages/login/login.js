@@ -1,13 +1,24 @@
-import React, {useContext} from 'react'
-import AuthContext from '../../context/AuthContext'
-import logo from './CAVSlogo.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useContext, useState } from 'react';
+import AuthContext from '../../context/AuthContext';
+import logo from './CAVSlogo.png';
 
 <link href="styles.css" rel="stylesheet"></link>
 
 
 const Login = () => {
+        //create your forceUpdate hook
+        function useForceUpdate(){
+            const [value, setValue] = useState(0); // integer state
+            return () => setValue(value => value + 1); // update state to force render
+            // A function that increment 👆🏻 the previous state like here 
+            // is better than directly setting `setValue(value + 1)`
+        }
+        
+        const forceUpdate = useForceUpdate();
+
     let {loginUser} = useContext(AuthContext)
+    
     return (
 
         <html lang="en">
@@ -38,7 +49,7 @@ const Login = () => {
                 
                 <div class="container p-4">
 
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                <button onclick = "{forceUpdate}" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 
                     <p class="col md-3">or</p>
                     <a class ="p-4" href="/sign-up" role = "button">Register here</a>
