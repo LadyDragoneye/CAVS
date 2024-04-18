@@ -1,19 +1,18 @@
 // Filename - "./components/Navbar.js
  
-import { default as React, useContext } from "react";
+import React, { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import logo from './CAVSlogo.png';
 import { Nav, NavLink, NavMenu } from "./NavbarElements";
 
 const Navbar = () => {
-    const { user } = useContext(AuthContext);
+    const user = useContext(AuthContext)
 
     // Check if user is authenticated
     const isAuthenticated = user !== null && user !== undefined; // Adjust this condition based on your authentication logic
 
     if (isAuthenticated) {
         return (
-            <>
                 <Nav>
                 {<img src={logo} alt="CAVS logo" height={125} width={125}></img>}
                     <NavMenu>
@@ -34,7 +33,6 @@ const Navbar = () => {
                         </NavLink>
                     </NavMenu>
                 </Nav>
-            </>
         );
     } else {
         return (
