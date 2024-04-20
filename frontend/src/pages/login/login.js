@@ -46,7 +46,7 @@ const Login = () => {
                 
                 <div class="container p-4">
 
-                <button onclick = "{forceUpdate}" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                <button onClick = {forceUpdate} class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 
                     <p class="col md-3">or</p>
                     <a class ="p-4" href="/sign-up" role = "button">Register here</a>

@@ -7,17 +7,13 @@ const PrivateRoutesAuthenticated = () => {
 
     // Check if user is authenticated
     const isAuthenticated = user !== null && user !== undefined; // Adjust this condition based on your authentication logic
-
     // If user is authenticated, navigate to account page
     if (isAuthenticated) {
         return <Navigate to="/account"/>;
     }
-    else{
-        return <Outlet />;
-    }
-
     // If user is not authenticated, render child routes
 
+    return <Outlet />;
 };
 
 export default PrivateRoutesAuthenticated;
