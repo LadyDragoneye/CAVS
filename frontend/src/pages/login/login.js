@@ -11,8 +11,7 @@ const Login = () => {
     let {loginUser} = useContext(AuthContext)
     
     //create your forceUpdate hook
-    const [, updateState] = React.useState();
-    const forceUpdate = React.useCallback(() => updateState({}), []);
+    //const [_, forceUpdate] = useReducer((x) => x + 1, 0);
    
     console.log("rendering...");
 
@@ -26,7 +25,7 @@ const Login = () => {
             <meta name="author" content=""/>
             <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico"/>
 
-            <title>Signin</title>
+            <title>Sign-In</title>
 
             <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/"/>
 
@@ -46,7 +45,7 @@ const Login = () => {
                 
                 <div class="container p-4">
 
-                <button onClick = {forceUpdate} class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 
                     <p class="col md-3">or</p>
                     <a class ="p-4" href="/sign-up" role = "button">Register here</a>
