@@ -3,8 +3,10 @@
 import { registerLicense } from '@syncfusion/ej2-base';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { EJ } from "syncfusion-javascript";
 import './CalStyle.css';
 registerLicense('Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXtecXVWRmhcV0x1WUM=');
+
 
 const Cal = () => {
 
