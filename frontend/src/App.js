@@ -14,6 +14,9 @@ import SignUp from "./pages/signup/signup";
 import Cal from "./pages/calendar/Cal";
 import PrivateRoutes from './utils/PrivateRoutes'
 import { AuthProvider } from './context/AuthContext'
+import Notes from './pages/notes/notes'
+
+
 
 class App extends Component {  // Define a new class component named App
   
@@ -41,6 +44,8 @@ class App extends Component {  // Define a new class component named App
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/login" element={<Login />} />
               <Route path="/cal" element={<Cal />} />
+              <Route path="/notes" element={<Notes />} />
+
           </Routes>
           </AuthProvider>
 

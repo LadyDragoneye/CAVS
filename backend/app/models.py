@@ -12,6 +12,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 class User(AbstractUser):
     username = models.CharField(max_length=100)
@@ -43,5 +44,12 @@ post_save.connect(create_user_profile, sender=User)
 post_save.connect(save_user_profile, sender=User)
 
 class Note(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_notes', default=1)
+    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_notes', null=True)
     body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+def __str__(self):
+    sender = self.user.username if self.user else "Unknown"
+    recipient = self.recipient.username if self.recipient else "Unknown"
+    return f"From: {sender}, To: {recipient}"

@@ -20,6 +20,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from .models import Note
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -49,7 +50,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'username', 'password', 'password2')
+        fields = ('emails', 'username', 'password', 'password2')
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
@@ -69,3 +70,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+    
+class NoteSerializer(serializers.ModelSerializer):
+    user = serializers.EmailField(source='user.email')
+    recipient = serializers.EmailField(source='recipient.email')
+    class Meta:
+        model = Note
+        fields = ['id', 'user', 'recipient', 'body', 'created_at']
+
+
