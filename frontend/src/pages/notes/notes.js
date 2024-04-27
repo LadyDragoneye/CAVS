@@ -5,6 +5,7 @@ import AuthContext from '../../context/AuthContext';
 const Notes = () => {
   const [body, setBody] = useState('');
   const [recipient, setRecipient] = useState('');
+  const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
   const [userNotes, setUserNotes] = useState([]);
   const { authTokens } = useContext(AuthContext);
@@ -58,17 +59,20 @@ const Notes = () => {
         console.error('User is not authenticated. Authentication token is missing.');
         throw new Error('Authentication token is missing.');
       }
-
+  
+      console.log('Attempting to create note...');
+      console.log('Subject:', subject); // Log the subject state
       console.log('Attempting to create note...');
       const response = await axios.post(
         'http://localhost:8000/app/notes/',
-        { body, recipient },
+        { body, recipient, subject }, // Include subject in the request body
         { headers: { Authorization: `Bearer ${authTokens.access}` } }
       );
       console.log('Note created successfully:', response.data);
       setMessage('Note created successfully.');
       setBody('');
       setRecipient('');
+      setSubject('');
       // After creating a note, refresh the user's notes
       fetchUserNotes(); // Fetch user notes after creating a new note
     } catch (error) {
@@ -82,6 +86,7 @@ const Notes = () => {
       console.log('Finished handling note creation attempt.');
     }
   };
+  
 
   return (
     <div>
@@ -92,6 +97,13 @@ const Notes = () => {
           value={recipient}
           onChange={(e) => setRecipient(e.target.value)}
           placeholder="Recipient's email address"
+          required
+        />
+        <input
+          type="text"
+          value={subject}
+          onChange={(e) => setSubject(e.target.value)}
+          placeholder="Subject"
           required
         />
         <textarea

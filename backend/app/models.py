@@ -46,10 +46,11 @@ post_save.connect(save_user_profile, sender=User)
 class Note(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_notes', default=1)
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_notes', null=True)
+    subject = models.CharField(max_length=200)  # Default value added here
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-def __str__(self):
-    sender = self.user.username if self.user else "Unknown"
-    recipient = self.recipient.username if self.recipient else "Unknown"
-    return f"From: {sender}, To: {recipient}"
+    def __str__(self):
+        sender = self.user.username if self.user else "Unknown"
+        recipient = self.recipient.username if self.recipient else "Unknown"
+        return f"From: {sender}, To: {recipient}, Subject: {self.subject}"
