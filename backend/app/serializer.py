@@ -74,8 +74,9 @@ class RegisterSerializer(serializers.ModelSerializer):
 class NoteSerializer(serializers.ModelSerializer):
     user = serializers.EmailField(source='user.email')
     recipient = serializers.EmailField(source='recipient.email')
+    subject = serializers.CharField()  # Add this line to include the subject field
     class Meta:
         model = Note
-        fields = ['id', 'user', 'recipient', 'body', 'created_at']
+        fields = ['id', 'user', 'recipient', 'subject', 'body', 'created_at', 'caseNumber', 'start_date', 'end_date']
 
 

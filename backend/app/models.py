@@ -13,7 +13,7 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
 from django.utils import timezone
-
+from django.core.validators import RegexValidator
 class User(AbstractUser):
     username = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
@@ -49,8 +49,11 @@ class Note(models.Model):
     subject = models.CharField(max_length=200)  # Default value added here
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-
+    caseNumber = models.CharField(max_length=200, default='123', validators=[RegexValidator(regex='^[0-9]*$', message='Case number must contain only numeric characters.', code='invalid_casenumber')])
+    start_date = models.DateTimeField(default=timezone.now)
+    end_date = models.DateTimeField(default=timezone.now)
+    # making changes
     def __str__(self):
         sender = self.user.username if self.user else "Unknown"
         recipient = self.recipient.username if self.recipient else "Unknown"
-        return f"From: {sender}, To: {recipient}, Subject: {self.subject}"
+        return f"From: {sender}, To: {recipient}, Subject: {self.subject}, caseNumber: {self.caseNumber}, start_date: {self.start_date}, end_date: {self.end_date}"

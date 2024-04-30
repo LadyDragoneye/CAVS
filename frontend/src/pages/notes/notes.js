@@ -5,10 +5,15 @@ import AuthContext from '../../context/AuthContext';
 const Notes = () => {
   const [body, setBody] = useState('');
   const [recipient, setRecipient] = useState('');
+  const [user, setUser] = useState(''); // Add this line
   const [subject, setSubject] = useState('');
+  const [caseNumber, setCaseNumber] = useState(''); // Default case number
   const [message, setMessage] = useState('');
   const [userNotes, setUserNotes] = useState([]);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const { authTokens } = useContext(AuthContext);
+
 
   const fetchUserNotes = async () => {
     try {
@@ -19,11 +24,13 @@ const Notes = () => {
       const response = await axios.get('http://localhost:8000/app/user/notes/', {
         headers: { Authorization: `Bearer ${authTokens.access}` }
       });
+      console.log('Response from fetchUserNotes:', response.data); // Add this line for debugging
       setUserNotes(response.data);
     } catch (error) {
       console.error('Error fetching user notes:', error);
     }
   };
+  
 
   const fetchUserReceivedNotes = async () => {
     try {
@@ -65,7 +72,7 @@ const Notes = () => {
       console.log('Attempting to create note...');
       const response = await axios.post(
         'http://localhost:8000/app/notes/',
-        { body, recipient, subject }, // Include subject in the request body
+        { body, recipient, subject, user, caseNumber }, // Include subject in the request body
         { headers: { Authorization: `Bearer ${authTokens.access}` } }
       );
       console.log('Note created successfully:', response.data);
@@ -73,6 +80,10 @@ const Notes = () => {
       setBody('');
       setRecipient('');
       setSubject('');
+      setStartDate('');
+      setEndDate('');
+      setCaseNumber(''); // Reset case number state
+      setBody('User');
       // After creating a note, refresh the user's notes
       fetchUserNotes(); // Fetch user notes after creating a new note
     } catch (error) {
@@ -106,6 +117,25 @@ const Notes = () => {
           placeholder="Subject"
           required
         />
+          <input
+          type="text"
+          value={caseNumber}
+          onChange={(e) => setCaseNumber(e.target.value)}
+          placeholder="case number"
+          required
+        />
+        <input
+          type="datetime-local"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          required
+        />
+        <input
+          type="datetime-local"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          required
+        />
         <textarea
           value={body}
           onChange={(e) => setBody(e.target.value)}
@@ -118,10 +148,18 @@ const Notes = () => {
 
       <h2>Your Notes</h2>
       <ul>
-        {userNotes.map((note) => (
-          <li key={note.id}>{note.body}</li>
-        ))}
-      </ul>
+  {userNotes.map((note) => (
+    <li key={note.id}>
+      <strong>Sender's Email:</strong> {note.user}<br /> {/* Added this line */}
+      <strong>Recipient:</strong> {note.recipient}<br />
+      <strong>Subject:</strong> {note.subject}<br />
+      <strong>Case Number:</strong> {note.caseNumber}<br /> {/* Added this line */}
+      <strong>Body:</strong> {note.body}
+    </li>
+  ))}
+</ul>
+
+
     </div>
   );
 };
