@@ -2,7 +2,7 @@
  
 import React from "react";
 import Accordion from 'react-bootstrap/Accordion';
-import "./faqStyle.css"
+import "./faqStyle.css";
 <link href="styles.css" rel="stylesheet"></link>
 
 
