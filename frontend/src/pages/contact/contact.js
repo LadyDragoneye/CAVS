@@ -2,7 +2,7 @@
  
 import React, {useState} from "react";
 import emailjs from '@emailjs/browser';
-
+import "./conStyles.css";
 <link href="conStyles.css" rel="stylesheet"></link>
 const Contact = () => {
     const [name, setName] = useState('');
@@ -35,12 +35,13 @@ const Contact = () => {
             });
     }
     return (
+        
         <div class="container mt-5 pt-5">
             <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"></link>
-            <div class="container p-5 mt-5">
+            <div class="container p-5 mt-5" id="contactForm">
                 <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <div class="well well-sm">
+                    <div class="well well-sm" id="hey">
                     <form class="form-horizontal" onSubmit={handleSubmit} className="emailForm">
                     <fieldset>
                         <legend class="text-center" id="contactTitle">Contact us</legend>
