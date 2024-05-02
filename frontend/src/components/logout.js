@@ -5,13 +5,14 @@ import { Navigate, useLocation } from 'react-router-dom';
 
 
 const LogoutButton = () => {
-  //let {logoutUser} = useContext(AuthContext)
+  let {logoutUser} = useContext(AuthContext);
   let location = useLocation();
 
   const Logout = () => {
     // Call logoutUser to logout the user
-    //logoutUser(); 
+    logoutUser(); 
     // Redirect to the home page
+    
     return <Navigate to="/" state={{ from: location }} replace />;
     };
 

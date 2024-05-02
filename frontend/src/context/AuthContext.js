@@ -116,7 +116,7 @@ export const AuthProvider = ({children}) => {
         authTokens:authTokens,
         loginUser:loginUser,
         signupUser:signupUser,
-        // logoutUser:logoutUser, // need to add logout button
+        logoutUser:logoutUser, // need to add logout button
     }
 
     useEffect(()=> {
