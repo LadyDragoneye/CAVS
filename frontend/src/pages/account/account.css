@@ -1,5 +1,17 @@
-body {
-    background: rgb(217, 229, 240)
+.html-info {  height: 100%;
+              position: absolute;
+              left: 0;
+              width: 100%;
+              overflow: hidden;
+            }
+
+.body-info {
+    background-color: rgb(217, 229, 240);
+    height: 100%;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
 }
 
 .form-control:focus {
