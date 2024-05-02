@@ -4,6 +4,7 @@ import React, { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import logo from './CAVSlogo.png';
 import { Nav, NavLink, NavMenu } from "./NavbarElements";
+import LogoutButton from "./logout";
 
 const Navbar = () => {
     const { user } = useContext(AuthContext)
@@ -54,6 +55,7 @@ const Navbar = () => {
                     <NavLink to="/Cal" activeStyle>
                         Calendar
                     </NavLink>
+                    <LogoutButton />
                 </NavMenu>
             </Nav>
         )
