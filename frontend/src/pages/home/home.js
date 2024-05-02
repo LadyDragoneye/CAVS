@@ -1,13 +1,15 @@
 // Filename - pages/home.js
 
 import React from "react";
+import "./home.css";
+
 <link href="styles.css" rel="stylesheet"></link>
 
 const Home = () => {
     return (
         <div>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"></link>
-            <div style={{ backgroundColor : "secondary"}} class="jumbotron jumbotron-fluid">
+            <div style={{ backgroundColor : "#D9E5F0"}} class="jumbotron jumbotron-fluid">
                 <div class="container">
                     <h2 class="display-1 text-center">Welcome to CAVS, the Court Attendance Verification System</h2>
                     <div class="text-center">
