@@ -1,12 +1,15 @@
 // Filename - pages/account.js
- 
 import React from "react";
 import "./account.css";
+
 
 const Account = () => {
     return (
         <div className="container rounded bg-white mt-5 mb-5">
-            <div className="row justify-content-center"> {/* Center the content horizontally */}
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"></link>
+            <link rel="stylesheet" type="text/css" href="./account.css"/>
+
+            <div className="row justify-content-center"> 
                 <div className="col-md-9 border-right">
                     <div className="p-3 py-5">
                         <div className="d-flex justify-content-between align-items-center mb-3">
