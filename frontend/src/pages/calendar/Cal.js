@@ -1,66 +1,35 @@
-import React, { useState, useEffect, useContext } from 'react';
-import './CalStyle.css';
-import { registerLicense } from '@syncfusion/ej2-base';
-import {
-  Inject,
-  ScheduleComponent,
-  Day,
-  Week,
-  WorkWeek,
-  Month,
-  Agenda,
-  DragAndDrop,
-  Resize
-} from '@syncfusion/ej2-react-schedule';
-import { CalendarComponent } from '@syncfusion/ej2-react-calendars';
+import format from "date-fns/format";
+import getDay from "date-fns/getDay";
+import parse from "date-fns/parse";
+import startOfWeek from "date-fns/startOfWeek";
+import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import { DtPicker } from 'react-calendar-datetime-picker'
+import 'react-calendar-datetime-picker/dist/style.css'
+import "./App.css";
+import DatePicker from './DatePicker'; // Assuming DatePicker.js is in the same directory
 import axios from 'axios';
 import AuthContext from '../../context/AuthContext';
+import React, { useState, useEffect, useContext } from 'react';
 
-registerLicense('Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXtecXVWRmhcV0x1WUM=');
 
-const Cal = () => {
+
+
+const locales = {
+    "en-US": require("date-fns/locale/en-US"),
+};
+const localizer = dateFnsLocalizer({
+    format,
+    parse,
+    startOfWeek,
+    getDay,
+    locales,
+});
+
+const App = () => {
+  const [newEvent, setNewEvent] = useState({ subject: '', start: '', end: '', caseNumber: '', body: '', recipient: '' });
+  const [allNotes, setAllNotes] = useState([]);
   const { authTokens } = useContext(AuthContext);
-  const [subject, setSubject] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [caseNumber, setCaseNumber] = useState('123'); // Default case number
-  const [message, setMessage] = useState('');
-  const [body, setBody] = useState('');
-  const [recipient, setRecipient] = useState('');
-  const [user, setUser] = useState(''); // Add this line
-  const [userNotes, setUserNotes] = useState([]);
-  
-  const fetchUserNotes = async () => {
-    try {
-      if (!authTokens) {
-        console.error('User is not authenticated. Authentication token is missing.');
-        throw new Error('Authentication token is missing.');
-      }
-      const response = await axios.get('http://localhost:8000/app/user/notes/', {
-        headers: { Authorization: `Bearer ${authTokens.access}` }
-      });
-      console.log('Response from fetchUserNotes:', response.data); // Add this line for debugging
-      setUserNotes(response.data);
-    } catch (error) {
-      console.error('Error fetching user notes:', error);
-    }
-  };
-  
-
-  const fetchUserReceivedNotes = async () => {
-    try {
-      if (!authTokens) {
-        console.error('User is not authenticated. Authentication token is missing.');
-        throw new Error('Authentication token is missing.');
-      }
-      const response = await axios.get('http://localhost:8000/app/user/received_notes/', {
-        headers: { Authorization: `Bearer ${authTokens.access}` }
-      });
-      setUserNotes(response.data);
-    } catch (error) {
-      console.error('Error fetching user received notes:', error);
-    }
-  };
 
   useEffect(() => {
     if (authTokens) {
@@ -68,11 +37,22 @@ const Cal = () => {
     }
   }, [authTokens]); // Include authTokens in the dependency array
 
-  useEffect(() => {
-    if (authTokens) {
-      fetchUserReceivedNotes();
+  const fetchUserNotes = async () => {
+    try {
+      if (!authTokens) {
+        console.error('User is not authenticated. Authentication token is missing.');
+        throw new Error('Authentication token is missing.');
+      }
+
+      const response = await axios.get('http://localhost:8000/app/notes/', {
+        headers: { Authorization: `Bearer ${authTokens.access}` },
+      });
+
+      setAllNotes(response.data);
+    } catch (error) {
+      console.error('Error fetching user events:', error);
     }
-  }, [authTokens]); // Include authTokens in the dependency array
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,85 +61,54 @@ const Cal = () => {
         console.error('User is not authenticated. Authentication token is missing.');
         throw new Error('Authentication token is missing.');
       }
-  
-      console.log('Attempting to create note...');
-      console.log('Subject:', subject); // Log the subject state
-      console.log('Attempting to create note...');
+
+      console.log('Attempting to create event...');
+      console.log('Subject:', newEvent.subject); // Log the title state
       const response = await axios.post(
         'http://localhost:8000/app/notes/',
-        { body, recipient, subject, user }, // Include subject in the request body
+        { subject: newEvent.subject, start: newEvent.start, end: newEvent.end, caseNumber: newEvent.caseNumber, body: newEvent.body, recipient: newEvent.recipient },
         { headers: { Authorization: `Bearer ${authTokens.access}` } }
       );
-      console.log('Note created successfully:', response.data);
-      setMessage('Note created successfully.');
-      setBody('');
-      setRecipient('');
-      setSubject('');
-      setBody('User');
-      // After creating a note, refresh the user's notes
-      fetchUserNotes(); // Fetch user notes after creating a new note
+      console.log('Event created successfully:', response.data);
+      setNewEvent({ subject: '', start: '', end: '', caseNumber: '', body: '', recipient: '' }); // Reset newEvent state
+      fetchUserNotes(); // Fetch user events after creating a new event
     } catch (error) {
       if (error.message === 'Authentication token is missing.') {
         console.error('User is not authenticated. Authentication token is missing.');
       } else {
-        console.error('Error creating note:', error);
+        console.error('Error creating event:', error);
       }
-      setMessage('Failed to create note.');
-    } finally {
-      console.log('Finished handling note creation attempt.');
     }
   };
-  
-  return (
-    <div>
-      <h2>Create a Note</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={recipient}
-          onChange={(e) => setRecipient(e.target.value)}
-          placeholder="Recipient's email address"
-          required
-        />
-        <input
-          type="text"
-          value={subject}
-          onChange={(e) => setSubject(e.target.value)}
-          placeholder="Subject"
-          required
-        />
-        <textarea
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-          placeholder="Enter your note..."
-          required
-        />
-        <button type="submit">Submit</button>
-      </form>
-      {message && <p>{message}</p>}
 
-      <h2>Your Notes</h2>
-     
+    return (
+        <div className="App">
+            <h1>Calendar</h1>
+            <h2>Add New Event</h2>
+            <div>
+                <input type="text" placeholder="Add Subject" style={{ width: "20%", marginRight: "10px" }} value={newEvent.subject} onChange={(e) => setNewEvent({ ...newEvent, subject: e.target.value })} />
+                <input type="text" placeholder="Add Case Number" style={{ width: "20%", marginRight: "10px" }} value={newEvent.caseNumber} onChange={(e) => setNewEvent({ ...newEvent, caseNumber: e.target.value })} />
+                <input type="text" placeholder="Add Recipient" style={{ width: "20%", marginRight: "10px" }} value={newEvent.recipient} onChange={(e) => setNewEvent({ ...newEvent, recipient: e.target.value })} />
+                <input type="text" placeholder="Add Body" style={{ width: "20%", marginRight: "10px" }} value={newEvent.body} onChange={(e) => setNewEvent({ ...newEvent, body: e.target.value })} />
+                <div style={{ marginTop: "200px" }}> {/* Adjust position */}
+                    <DatePicker selected={newEvent.start} onChange={(start) => setNewEvent({ ...newEvent, start })} />
+                </div>
+                <div style={{ marginTop: "10px" }}> {/* Adjust position */}
+                    <DatePicker selected={newEvent.end} onChange={(end) => setNewEvent({ ...newEvent, end })} />
+                </div>
+                <button style={{ marginTop: "10px" }} onClick={handleSubmit}>
+                    Add Event
+                </button>
+            </div>
+            <Calendar localizer={localizer} events={allNotes.map(note => ({
+              subject: note.subject,
+              start: new Date(note.start_date),
+              end: new Date(note.end_date),
+              senderEmail: note.user.email // Add sender's email to the event object
+            }))} 
+            startAccessor="start" endAccessor="end" style={{ height: 500, margin: "50px" }} />
+        </div>
+    );
+}
 
-
-
-
-
-
-
-
-
-
-
-
-      {message && <p>{message}</p>}
-
-      <h2>Events</h2>
-      <ScheduleComponent>
-        <Inject services={[Day, Week, WorkWeek, Month, Agenda, DragAndDrop, Resize]} />
-      </ScheduleComponent>
-    </div>
-  );
-};
-
-export default Cal;
+export default App;

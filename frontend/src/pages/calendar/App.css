@@ -1,0 +1,27 @@
+.App {
+	text-align: center;
+}
+
+
+.custom-input {
+    text-align: right;
+    color: #009a17;
+    height: 46px !important;
+    line-height: 46px !important;
+    &::placeholder {
+      color: #009a17;
+    }
+  }
+  .custom-days {
+    background-color: #c8daff;
+    .is-week-days {
+      color: #d20000;
+    }
+    .is-disabled {
+      color: #444;
+    }
+  }
+  .custom-header {
+    background-color: #538bff;
+  }
+  
