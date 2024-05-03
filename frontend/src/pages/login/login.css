@@ -1,0 +1,34 @@
+.logBox{
+    font-family: "IBM Plex Serif", serif;
+    padding: 8px;
+    margin: 8px;
+    border-radius: 8px;
+}
+#signInfo{
+    font-family: "IBM Plex Serif", serif;
+    font-size: 28px;
+    font-weight: 420;
+    
+}
+
+#signButton{
+    background-color:#2b2d30 ;
+    outline-color: black;
+    font-family: "IBM Plex Serif", serif;
+    font-size: 26px;
+    
+}
+#reg{
+    font-family: "IBM Plex Serif", serif;
+    
+}
+
+body{
+    background-color:#d9e5f0;
+}
+h1{
+    font-family: "IBM Plex Serif", serif;
+    font-size: 32px;
+    font-weight: 420;
+}
+

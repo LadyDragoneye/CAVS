@@ -1,0 +1,36 @@
+#contactTitle{
+    font-size: 28px;
+    font-family: "IBM Plex Serif", serif;
+}
+#nameBox{
+    font-family: "IBM Plex Serif", serif;
+    border-radius: 12px;
+}
+#name{
+    font-family: "IBM Plex Serif", serif;
+    border-radius: 8px;
+    border-width: 0.2px;
+    border-color:#2b2d30;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+}
+#email{
+    font-family: "IBM Plex Serif", serif;
+    border-radius: 8px;
+    border-width: 0.2px;
+    border-color:#2b2d30;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+}
+#message{
+    font-family: "IBM Plex Serif", serif;
+    border-radius: 8px;
+    border-width: 0.2px;
+    border-color:#2b2d30;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+}
+#submitButton{
+    font-family: "IBM Plex Serif", serif;
+    border-radius: 4px;
+}
