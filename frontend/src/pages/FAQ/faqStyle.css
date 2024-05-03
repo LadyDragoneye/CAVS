@@ -1,10 +1,51 @@
 .card{
+    background-color:#d9e5f0 ;
+}
+.faqtitle{
+    font-family: "IBM Plex Serif", serif;
+    font-size: 48px;
+    font-weight: 400;
+    text-align: center;
+}
+.title-ex{
+    text-align: center;
+    font-family: "IBM Plex Serif", serif;
+    font-size: 28px;
+}
+
+#accordion{
+    background-color:#d9e5f0 ;
+    text-align: center;
+    font-size: 48px;
+}
+.card-header{
+    background-color:#d9e5f0 ;
+    font-size: 28px;
+    font-family: "IBM Plex Serif", serif;
+}
+.fullpage{
+    background-color:#d9e5f0 ;
+}
+.question{
+    font-size: 32px;
+}
+
+.AccordGroup{
+    font-size: 48px;
+}
+.accHead{
+    font-size: 48px;
+    text-align: center;
+}
+#faqitem{
+    font-family: "IBM Plex Serif", serif;
+    font-size: 20px;
+}
+#submitButton{
+    background-color:#4481B4;
+    font-family: "IBM Plex Serif", serif;
+    font-size: 26px;
     
 }
 
-.accordion{
-    background-color: blueviolet;
-}
-.card-header{
-    
-}
+

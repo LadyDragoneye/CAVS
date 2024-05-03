@@ -47,21 +47,21 @@ const Contact = () => {
                         <legend class="text-center" id="contactTitle">Contact us</legend>
                 
                         <div class="form-group">
-                        <label class="col-md-3 control-label" for="name">Name</label>
+                        <label class="col-md-3 control-label" for="name" id="nameBox">Name</label>
                         <div class="col-md-9">
                             <input id="name" name="name" type="text" placeholder="Name" class="form-control" value={name} onChange={(e) => setName(e.target.value)}></input>
                         </div>
                         </div>
                 
                         <div class="form-group">
-                        <label class="col-md-3 control-label" for="email">E-mail</label>
+                        <label class="col-md-3 control-label" for="email" id="email">E-mail</label>
                         <div class="col-md-9">
                             <input id="email" name="email" type="text" placeholder="E-mail" class="form-control" value={email} onChange={(e) => setEmail(e.target.value)}></input>
                         </div>
                         </div>
                 
                         <div class="form-group">
-                        <label class="col-md-3 control-label" for="message">Message</label>
+                        <label class="col-md-3 control-label" for="message" id="message">Message</label>
                         <div class="col-md-9">
                             <textarea class="form-control" id="message" name="message" placeholder="Please enter your message here..." rows="5" value={message} onChange={(e) => setMessage(e.target.value)}></textarea>
                         </div>
@@ -69,7 +69,7 @@ const Contact = () => {
                 
                         <div class="form-group">
                         <div class="col-md-12 text-right">
-                           <button type="submit">Send</button>
+                           <button type="submit" id="submitButton">Send</button>
                         </div>
                         </div>
                     </fieldset>

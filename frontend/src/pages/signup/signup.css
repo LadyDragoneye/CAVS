@@ -1,0 +1,40 @@
+#inputFname{
+    font-family: "IBM Plex Serif", serif;
+    padding: 8px;
+    margin: 8px;
+    border-radius: 8px;
+}
+#inputLname{
+    font-family: "IBM Plex Serif", serif;
+    padding: 8px;
+    margin: 8px;
+    border-radius: 8px;
+}
+#emUs{
+    font-family: "IBM Plex Serif", serif;
+    padding: 8px;
+    margin: 8px;
+    border-radius: 8px;
+}
+#pass{
+    font-family: "IBM Plex Serif", serif;
+    padding: 8px;
+    margin: 8px;
+    border-radius: 8px;
+}
+.emailBox2{
+    font-family: "IBM Plex Serif", serif;
+    margin-left: 8px;
+}
+
+#title{
+    font-family: "IBM Plex Serif", serif;
+    font-size: 28px;
+    font-weight: 420;
+}
+ #regButton{
+    background-color:#2b2d30 ;
+    outline-color: black;
+    font-family: "IBM Plex Serif", serif;
+    font-size: 26px;
+ }

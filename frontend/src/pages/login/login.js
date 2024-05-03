@@ -2,8 +2,9 @@ import React, {useContext} from 'react'
 import AuthContext from '../../context/AuthContext'
 import logo from './CAVSlogo.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "./login.css";
 
-<link href="styles.css" rel="stylesheet"></link>
+<link href="login.css" rel="stylesheet"></link>
 
 
 const Login = () => {
@@ -29,19 +30,19 @@ const Login = () => {
 
         <body class="text-center">
         <img src={logo} alt="CAVS logo" height={125} width={125}></img>
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <h1 id="signInfo">Please sign in</h1>
 
         <div>
             <form onSubmit={loginUser}>
-                <input type="text" name="email" placeholder="Enter Email" />
-                <input type="password" name="password" placeholder="Enter Password" />
+                <input type="text" name="email" placeholder="Enter Email" class="logBox"/>
+                <input type="password" name="password" placeholder="Enter Password" class="logBox" />
                 
                 <div class="container p-4">
 
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" id="signButton">Sign in</button>
 
                     <p class="col md-3">or</p>
-                    <a class ="p-4" href="/sign-up" role = "button">Register here</a>
+                    <a class ="p-4" href="/sign-up" role = "button" id="reg">Register here</a>
                         </div>
             </form>
         </div>

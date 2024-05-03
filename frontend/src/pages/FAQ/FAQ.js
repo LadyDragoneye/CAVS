@@ -12,23 +12,23 @@ const FAQ = () => {
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"></link>
             <div style={{ backgroundColor : "secondary"}} class="jumbotron jumbotron-fluid">
                 <div class="container">
-                    <h2 class="display-1 text-center">Frequently Asked Questions</h2>
-                    <div class="text-center p-2">
+                    <h2 class="faqtitle">Frequently Asked Questions</h2>
+                    <div class="title-ex">
                         <p>
                             Have another question?
                             <br/>
-                            <a class ="btn btn-primary btn-lg mt-4" href="contact" role = "button">Contact Us</a>
+                            <a class ="btn btn-primary btn-lg mt-4" id="submitButton" href="contact" role = "button">Contact Us</a>
                         </p>
                     </div>
                 </div>
             </div>
             <div id="accordion">
-                <Accordion>
+                <Accordion id="fullAcc">
                 <div class="card">
                     <div class="card-header" id="headingOne">
                     <h5 class="mb-0">
                         <Accordion.Item eventKey="0">
-                        <Accordion.Header>How do I get started?</Accordion.Header>
+                        <Accordion.Header style={{alignItems: "center"}}>How do I get started?</Accordion.Header>
                         <Accordion.Body> Getting started is easy! All you have to do is register your account to gain access to all features including the calendar.</Accordion.Body>
                         </Accordion.Item>
                     </h5>
