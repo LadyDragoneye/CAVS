@@ -77,6 +77,6 @@ class NoteSerializer(serializers.ModelSerializer):
     subject = serializers.CharField()  # Add this line to include the subject field
     class Meta:
         model = Note
-        fields = ['id', 'user', 'recipient', 'subject', 'body', 'created_at', 'caseNumber', 'start_date', 'end_date']
+        fields = ['id', 'user', 'recipient', 'subject', 'body', 'created_at', 'caseNumber', 'start_date', 'end_date', 'confirmed_attendance']
 
 

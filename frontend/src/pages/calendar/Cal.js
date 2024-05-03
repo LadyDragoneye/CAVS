@@ -3,9 +3,7 @@ import getDay from "date-fns/getDay";
 import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
 import { Calendar, momentLocalizer, dateFnsLocalizer } from "react-big-calendar";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import { DtPicker } from 'react-calendar-datetime-picker'
-import 'react-calendar-datetime-picker/dist/style.css'
+import "react-datepicker/dist/react-datepicker.css";
 import "./App.css";
 import DatePicker from './DatePicker'; // Assuming DatePicker.js is in the same directory
 import axios from 'axios';
@@ -43,6 +41,7 @@ const App = () => {
   const [newEvent, setNewEvent] = useState({ subject: 'subject testing', start_date: '', end_date: '', caseNumber: '12121', body: 'testing things', recipient: 'user@gmail.com' });
   const [userNotes, setUserNotes] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [changesMade, setChangesMade] = useState(false); // State variable to track changes
   const { authTokens } = useContext(AuthContext);
 
 
@@ -85,11 +84,13 @@ const App = () => {
   };
 
 
+  // useEffect to fetch user notes only when changes are made
   useEffect(() => {
-    if (authTokens) {
+    if (authTokens && changesMade) { // Fetch only when authTokens and changesMade are true
       fetchUserNotes();
+      setChangesMade(false); // Reset changesMade after fetching
     }
-  }, [authTokens]); // Include authTokens in the dependency array
+  }, [authTokens, changesMade]); // Include authTokens and changesMade in the dependency array
 
   useEffect(() => {
     if (authTokens) {
@@ -127,8 +128,8 @@ const App = () => {
       if (!authTokens) {
         console.error('User is not authenticated. Authentication token is missing.');
         throw new Error('Authentication token is missing.');
-      }
-
+      } 
+      setChangesMade(true);
       console.log('Attempting to create event...');
       console.log('Subject:', newEvent.subject); // Log the title state
 
@@ -154,6 +155,8 @@ const App = () => {
       console.log('Event created successfully:', response.data);
       setNewEvent({ subject: 'subTesting', start_date: '', end_date: '', caseNumber: '32444', body: 'testing things', recipient: 'user@gmail.com' }); // Reset newEvent state
       fetchUserNotes(); // Fetch user events after creating a new event
+      fetchUserNotes(); // Fetch user events after creating a new event
+
     } catch (error) {
       if (error.message === 'Authentication token is missing.') {
         console.error('User is not authenticated. Authentication token is missing.');
@@ -163,14 +166,25 @@ const App = () => {
     }
   };
 
-  const CustomEvent = ({ event, onClick }) => {
-    const [expanded, setExpanded] = useState(false);
+  const handleConfirmAttendance = async () => {
+    try {
+      if (!authTokens || !selectedEvent) {
+        console.error('User is not authenticated or no event selected.');
+        return;
+      }
   
+      const queryParams = new URLSearchParams({ confirmed_attendance: true }); // Construct query parameters
+      const response = await axios.patch(`http://localhost:8000/app/notes/${selectedEvent.id}/?${queryParams}`, null, {
+        headers: { Authorization: `Bearer ${authTokens.access}` },
+      });
   
+      console.log('Attendance confirmed successfully:', response.data);
+      setSelectedEvent({ ...selectedEvent, confirmed_attendance: true });
+    } catch (error) {
+      console.error('Error confirming attendance:', error);
+    }
   };
-
   
-
   return (
     <div className="App">
       <h1>Calendar</h1>
@@ -181,12 +195,12 @@ const App = () => {
         <EventForm label="Recipient" value={newEvent.recipient} onChange={(value) => setNewEvent({ ...newEvent, recipient: value })} />
         <textarea
           placeholder="Add Body"
-          style={{ width: '20%', height: '100px', marginRight: '10px' }}
+          style={{ width: '20%', height: '150px', marginRight: '10px' }}
           value={newEvent.body}
           onChange={(e) => setNewEvent({ ...newEvent, body: e.target.value })}
         />
 
-        <div style={{ marginTop: '10px' }}>
+        <div style={{ marginTop: '90px' }}>
           <DatePicker selected={newEvent.start_date} onChange={(start_date) => setNewEvent({ ...newEvent, start_date })} />
         </div>
         <div style={{ marginTop: '10px' }}>
@@ -240,7 +254,9 @@ const App = () => {
             <p><strong>Start:</strong> {selectedEvent.start_date.toLocaleString()}</p>
             <p><strong>End:</strong> {selectedEvent.end_date.toLocaleString()}</p>
             <p><strong>From:</strong> {selectedEvent.senderEmail}</p>
+            <p><strong>Confirmed Attendance:</strong> {selectedEvent.confirmed_attendance ? 'Yes' : 'No'}</p> 
           </div>
+          <button className="confirm-btn" onClick={() => handleConfirmAttendance(selectedEvent)}>Confirm Attendance</button>
           <button className="close-btn" onClick={() => setSelectedEvent(null)}>Close</button>
         </div>
       )}

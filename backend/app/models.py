@@ -52,8 +52,9 @@ class Note(models.Model):
     caseNumber = models.CharField(max_length=200, default='123', validators=[RegexValidator(regex='^[0-9]*$', message='Case number must contain only numeric characters.', code='invalid_casenumber')])
     start_date = models.DateTimeField(blank=True, null=True)  # No default value
     end_date = models.DateTimeField(blank=True, null=True)  # No default value
+    confirmed_attendance = models.BooleanField(default=False)  # New field for confirmed attendance
     # making changes
     def __str__(self):
         sender = self.user.username if self.user else "Unknown"
         recipient = self.recipient.username if self.recipient else "Unknown"
-        return f"From: {sender}, To: {recipient}, Subject: {self.subject}, caseNumber: {self.caseNumber}, start_date: {self.start_date}, end_date: {self.end_date}"
+        return f"From: {sender}, To: {recipient}, Subject: {self.subject}, caseNumber: {self.caseNumber}, start_date: {self.start_date}, end_date: {self.end_date}, Confirmed Attendance: {self.confirmed_attendance}"

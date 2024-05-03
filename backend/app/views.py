@@ -88,6 +88,7 @@ def testEndPoint(request):
 @permission_classes([IsAuthenticated])
 def create_note(request):
     if request.method == 'POST':
+        # Handle note creation logic here
         user_email = request.user.email
         recipient_email = request.data.get('recipient')  # Assuming recipient email is sent in request data
         user = get_object_or_404(User, email=user_email)
@@ -97,22 +98,55 @@ def create_note(request):
         caseNumber = request.data.get('caseNumber', None)  # Add this line
         start_date = request.data.get('start_date', None)
         end_date = request.data.get('end_date', None)
+        confirmed_attendance = request.data.get('confirmed_attendance', False)  # Set default value to False if not provided
 
         if not start_date:
-            start_date = timezone.now()  # Set default value for start_date if not provided
-        
+            start_date = timezone.now()
         if not end_date:
-            end_date = timezone.now()  # Set default value for end_date if not provided
+            end_date = timezone.now()
         if body:
-            note = Note.objects.create(user=user, recipient=recipient, body=body, subject=subject, caseNumber=caseNumber, start_date=start_date, end_date=end_date)
+            note = Note.objects.create(user=user, recipient=recipient, body=body, subject=subject, caseNumber=caseNumber, start_date=start_date, end_date=end_date, confirmed_attendance=confirmed_attendance)
             serializer = NoteSerializer(note)
             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return JsonResponse({'error': 'Body of the note is required.'}, status=status.HTTP_400_BAD_REQUEST)
     else:
-        return JsonResponse({'error': 'Only POST method is allowed.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        return JsonResponse({'error': 'Unsupported method.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def update_note(request, event_id):
+    # Handle note update logic here
+    note = get_object_or_404(Note, id=event_id)
+    user_email = request.user.email
+    if user_email != note.user.email:
+        return JsonResponse({'error': 'You are not allowed to update this note.'}, status=status.HTTP_403_FORBIDDEN)
     
+    body = request.data.get('body')
+    subject = request.data.get('subject')
+    caseNumber = request.data.get('caseNumber')
+    start_date = request.data.get('start_date')
+    end_date = request.data.get('end_date')
+    confirmed_attendance = request.data.get('confirmed_attendance')
+    
+    if confirmed_attendance is None:
+        note.confirmed_attendance = True
+    
+    if body is not None:
+        note.body = body
+    if subject is not None:
+        note.subject = subject
+    if caseNumber is not None:
+        note.caseNumber = caseNumber
+    if start_date is not None:
+        note.start_date = start_date
+    if end_date is not None:
+        note.end_date = end_date
+    
+    note.save()
+    
+    serializer = NoteSerializer(note)
+    return JsonResponse(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
