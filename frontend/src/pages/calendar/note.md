@@ -15,97 +15,88 @@ import { Event } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment-timezone';
 
-
 const EventForm = ({ label, value, onChange }) => (
-  <input
-    type="text"
-    placeholder={`Add ${label}`}
-    style={{ width: '20%', marginRight: '10px' }}
-    value={value}
-    onChange={(e) => onChange(e.target.value)}
-  />
+<input
+type="text"
+placeholder={`Add ${label}`}
+style={{ width: '20%', marginRight: '10px' }}
+value={value}
+onChange={(e) => onChange(e.target.value)}
+/>
 );
 
-
-
 const locales = {
-    "en-US": require("date-fns/locale/en-US"),
+"en-US": require("date-fns/locale/en-US"),
 };
 const localizer = dateFnsLocalizer({
-    format,
-    parse,
-    startOfWeek,
-    getDay,
-    locales,
+format,
+parse,
+startOfWeek,
+getDay,
+locales,
 });
 
 const App = () => {
-  const [newEvent, setNewEvent] = useState({ subject: 'subject testing', start_date: '', end_date: '', caseNumber: '12121', body: 'testing things', recipient: 'user@gmail.com' });
-  const [userNotes, setUserNotes] = useState([]);
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const { authTokens } = useContext(AuthContext);
+const [newEvent, setNewEvent] = useState({ subject: 'subject testing', start_date: '', end_date: '', caseNumber: '12121', body: 'testing things', recipient: 'user@gmail.com' });
+const [userNotes, setUserNotes] = useState([]);
+const [selectedEvent, setSelectedEvent] = useState(null);
+const { authTokens } = useContext(AuthContext);
 
+const handleSelectEvent = (event) => {
+setSelectedEvent(event);
+};
 
+const fetchUserNotes = async () => {
+try {
+if (!authTokens) {
+console.error('User is not authenticated. Authentication token is missing.');
+throw new Error('Authentication token is missing.');
+}
+const response = await axios.get('http://localhost:8000/app/user/notes/', {
+headers: { Authorization: `Bearer ${authTokens.access}` }
+});
+console.log('Response from fetchUserNotes:', response.data); // Add this line for debugging
+setUserNotes(response.data);
+} catch (error) {
+console.error('Error fetching user notes:', error);
+}
+};
 
-  const handleSelectEvent = (event) => {
-    setSelectedEvent(event);
-  };
+const fetchUserReceivedNotes = async () => {
+try {
+if (!authTokens) {
+console.error('User is not authenticated. Authentication token is missing.');
+throw new Error('Authentication token is missing.');
+}
+const response = await axios.get('http://localhost:8000/app/user/received_notes/', {
+headers: { Authorization: `Bearer ${authTokens.access}` }
+});
+setUserNotes(response.data);
+} catch (error) {
+console.error('Error fetching user received notes:', error);
+}
+};
 
+useEffect(() => {
+if (authTokens) {
+fetchUserNotes();
+}
+}, [authTokens]); // Include authTokens in the dependency array
 
+useEffect(() => {
+if (authTokens) {
+fetchUserReceivedNotes();
+}
+}, [authTokens]); // Include authTokens in the dependency array
 
-  const fetchUserNotes = async () => {
-    try {
-      if (!authTokens) {
-        console.error('User is not authenticated. Authentication token is missing.');
-        throw new Error('Authentication token is missing.');
-      }
-      const response = await axios.get('http://localhost:8000/app/user/notes/', {
-        headers: { Authorization: `Bearer ${authTokens.access}` }
-      });
-      console.log('Response from fetchUserNotes:', response.data); // Add this line for debugging
-      setUserNotes(response.data);
-    } catch (error) {
-      console.error('Error fetching user notes:', error);
-    }
-  };
+const formatDateObjectToISOString = (dateObject) => {
+// Ensure dateObject is provided and contains required properties
+if (!dateObject || typeof dateObject !== 'object' ||
+!dateObject.year || !dateObject.month || !dateObject.day ||
+!dateObject.hour || !dateObject.minute) {
+return null;
+}
 
-  const fetchUserReceivedNotes = async () => {
-    try {
-      if (!authTokens) {
-        console.error('User is not authenticated. Authentication token is missing.');
-        throw new Error('Authentication token is missing.');
-      }
-      const response = await axios.get('http://localhost:8000/app/user/received_notes/', {
-        headers: { Authorization: `Bearer ${authTokens.access}` }
-      });
-      setUserNotes(response.data);
-    } catch (error) {
-      console.error('Error fetching user received notes:', error);
-    }
-  };
-
-
-  useEffect(() => {
-    if (authTokens) {
-      fetchUserNotes();
-    }
-  }, [authTokens]); // Include authTokens in the dependency array
-
-  useEffect(() => {
-    if (authTokens) {
-      fetchUserReceivedNotes();
-    }
-  }, [authTokens]); // Include authTokens in the dependency array
-
-
-  const formatDateObjectToISOString = (dateObject) => {
-    // Ensure dateObject is provided and contains required properties
-    if (!dateObject || typeof dateObject !== 'object' ||
-        !dateObject.year || !dateObject.month || !dateObject.day ||
-        !dateObject.hour || !dateObject.minute) {
-      return null;
-    }
-  
     // Construct a Date object using the provided properties
     const date = new Date(
       dateObject.year,
@@ -114,20 +105,19 @@ const App = () => {
       dateObject.hour,
       dateObject.minute
     );
-  
+
     // Return the ISO string representation of the Date object
     return date.toISOString();
-  };
 
+};
 
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      if (!authTokens) {
-        console.error('User is not authenticated. Authentication token is missing.');
-        throw new Error('Authentication token is missing.');
-      }
+const handleSubmit = async (e) => {
+e.preventDefault();
+try {
+if (!authTokens) {
+console.error('User is not authenticated. Authentication token is missing.');
+throw new Error('Authentication token is missing.');
+}
 
       console.log('Attempting to create event...');
       console.log('Subject:', newEvent.subject); // Log the title state
@@ -141,13 +131,13 @@ const App = () => {
       console.log('End Date:', endDateISO); // Log the end date state
       const response = await axios.post(
         'http://localhost:8000/app/notes/',
-        { 
-          subject: newEvent.subject, 
+        {
+          subject: newEvent.subject,
           start_date: startDateISO, // Use ISO string format
           end_date: endDateISO, // Use ISO string format
-          caseNumber: newEvent.caseNumber, 
-          body: newEvent.body, 
-          recipient: newEvent.recipient 
+          caseNumber: newEvent.caseNumber,
+          body: newEvent.body,
+          recipient: newEvent.recipient
         },
         { headers: { Authorization: `Bearer ${authTokens.access}` } }
       );
@@ -161,30 +151,29 @@ const App = () => {
         console.error('Error creating event:', error);
       }
     }
-  };
 
-  const CustomEvent = ({ event, onClick }) => {
-    const [expanded, setExpanded] = useState(false);
-  
-  
-  };
+};
 
-  
+const CustomEvent = ({ event, onClick }) => {
+const [expanded, setExpanded] = useState(false);
 
-  return (
-    <div className="App">
-      <h1>Calendar</h1>
-      <h2>Add New Event</h2>
-      <div>
-        <EventForm label="Subject" value={newEvent.subject} onChange={(value) => setNewEvent({ ...newEvent, subject: value })} />
-        <EventForm label="Case Number" value={newEvent.caseNumber} onChange={(value) => setNewEvent({ ...newEvent, caseNumber: value })} />
-        <EventForm label="Recipient" value={newEvent.recipient} onChange={(value) => setNewEvent({ ...newEvent, recipient: value })} />
-        <textarea
-          placeholder="Add Body"
-          style={{ width: '20%', height: '100px', marginRight: '10px' }}
-          value={newEvent.body}
-          onChange={(e) => setNewEvent({ ...newEvent, body: e.target.value })}
-        />
+};
+
+return (
+
+<div className="App">
+<h1>Calendar</h1>
+<h2>Add New Event</h2>
+<div>
+<EventForm label="Subject" value={newEvent.subject} onChange={(value) => setNewEvent({ ...newEvent, subject: value })} />
+<EventForm label="Case Number" value={newEvent.caseNumber} onChange={(value) => setNewEvent({ ...newEvent, caseNumber: value })} />
+<EventForm label="Recipient" value={newEvent.recipient} onChange={(value) => setNewEvent({ ...newEvent, recipient: value })} />
+<textarea
+placeholder="Add Body"
+style={{ width: '20%', height: '100px', marginRight: '10px' }}
+value={newEvent.body}
+onChange={(e) => setNewEvent({ ...newEvent, body: e.target.value })}
+/>
 
         <div style={{ marginTop: '10px' }}>
           <DatePicker selected={newEvent.start_date} onChange={(start_date) => setNewEvent({ ...newEvent, start_date })} />
@@ -200,7 +189,7 @@ const App = () => {
         localizer={localizer}
         events={userNotes.map((note) => ({
           id: note.id,
-          subject: note.subject,
+          title: note.subject,
           body: note.body,
           start_date: new Date(note.start_date),
           end_date: new Date(note.end_date),
@@ -208,7 +197,7 @@ const App = () => {
         }))}
         startAccessor="start_date"
         endAccessor="end_date"
-        style={{ height: 500, margin: '10px' }}
+        style={{ height: 500, margin: '50px' }}
         eventPropGetter={(event, start, end, isSelected) => {
           let style = {
             backgroundColor: '#007bff',
@@ -216,14 +205,14 @@ const App = () => {
             borderRadius: '8px',
             border: 'none',
             fontSize: '18px',
-            padding: '0px',
+            padding: '10px',
           };
           return { style };
         }}
         components={{
           event: ({ event }) => (
             <div className="custom-event" onClick={() => handleSelectEvent(event)}>
-              <div className="event-subject">{event.subject}</div>
+              <div className="event-title">{event.title}</div>
               <div className="event-time">{`${event.start_date.toLocaleTimeString()} - ${event.end_date.toLocaleTimeString()}`}</div>
               <div className="event-sender">{`From: ${event.senderEmail}`}</div>
             </div>
@@ -245,6 +234,7 @@ const App = () => {
         </div>
       )}
     </div>
-  );
+
+);
 };
 export default App;

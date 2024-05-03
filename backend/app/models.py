@@ -50,8 +50,8 @@ class Note(models.Model):
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     caseNumber = models.CharField(max_length=200, default='123', validators=[RegexValidator(regex='^[0-9]*$', message='Case number must contain only numeric characters.', code='invalid_casenumber')])
-    start_date = models.DateTimeField(default=timezone.now)
-    end_date = models.DateTimeField(default=timezone.now)
+    start_date = models.DateTimeField(blank=True, null=True)  # No default value
+    end_date = models.DateTimeField(blank=True, null=True)  # No default value
     # making changes
     def __str__(self):
         sender = self.user.username if self.user else "Unknown"

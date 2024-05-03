@@ -1,0 +1,65 @@
+/* Add some wild styles to make it stand out */
+.App {
+	text-align: center;
+  }
+  
+  .custom-input {
+	text-align: center; /* Change to center alignment */
+	color: #ff00ff; /* Change text color to magenta */
+	height: 60px !important; /* Increase input height */
+	line-height: 60px !important; /* Increase line height */
+	&::placeholder {
+	  color: #ff00ff; /* Change placeholder color to magenta */
+	}
+  }
+  
+  .custom-days {
+	background-color: #ffcc00; /* Change background color to yellow */
+	.is-week-days {
+	  color: #ff0000; /* Change week days color to red */
+	}
+	.is-disabled {
+	  color: #00ffff; /* Change disabled color to cyan */
+	}
+  }
+  
+  .custom-header {
+	background-color: #00ff00; /* Change header background color to green */
+  }
+  
+  /* Increase specificity for .selected-event */
+  div.selected-event {
+	position: relative; /* Change position to relative */
+	z-index: 100;
+	background-color: #00ffff; /* Change background color to cyan */
+	padding: 20px; /* Increase padding */
+	border: 2px dashed #ff0000; /* Change border to dashed red */
+	border-radius: 10px; /* Increase border radius */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Change box shadow */
+	font-size: 20px; /* Increase font size */
+  }
+  
+  .selected-event h2 {
+	margin-top: 20px; /* Increase margin top for h2 */
+	color: #0000ff; /* Change h2 color to blue */
+  }
+  
+  .selected-event p {
+	margin: 10px 0; /* Increase margin for paragraphs */
+	font-style: italic; /* Make paragraphs italic */
+  }
+  
+  .selected-event button {
+	margin-top: 20px; /* Increase margin top for button */
+	padding: 10px 20px; /* Increase padding for button */
+	background-color: #ff00ff; /* Change button background color to magenta */
+	color: #000; /* Change button text color to black */
+	border: 2px solid #000; /* Change button border to solid black */
+	border-radius: 5px; /* Decrease button border radius */
+	cursor: pointer;
+  }
+  
+  .selected-event button:hover {
+	background-color: #ffcc00; /* Change button hover background color to yellow */
+  }
+  

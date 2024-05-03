@@ -10,8 +10,8 @@ const Notes = () => {
   const [caseNumber, setCaseNumber] = useState(''); // Default case number
   const [message, setMessage] = useState('');
   const [userNotes, setUserNotes] = useState([]);
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [start_date, setStart_date] = useState('');
+  const [end_date, setEnd_date] = useState('');
   const { authTokens } = useContext(AuthContext);
 
 
@@ -70,9 +70,11 @@ const Notes = () => {
       console.log('Attempting to create note...');
       console.log('Subject:', subject); // Log the subject state
       console.log('Attempting to create note...');
+      console.log('date:', start_date); // Log the date state
+      console.log('date:', end_date); // Log the date state
       const response = await axios.post(
         'http://localhost:8000/app/notes/',
-        { body, recipient, subject, user, caseNumber }, // Include subject in the request body
+        { body, recipient, subject, user, caseNumber, start_date, end_date }, // Include subject in the request body
         { headers: { Authorization: `Bearer ${authTokens.access}` } }
       );
       console.log('Note created successfully:', response.data);
@@ -80,8 +82,8 @@ const Notes = () => {
       setBody('');
       setRecipient('');
       setSubject('');
-      setStartDate('');
-      setEndDate('');
+      setStart_date('');
+      setEnd_date('');
       setCaseNumber(''); // Reset case number state
       setBody('User');
       // After creating a note, refresh the user's notes
@@ -126,14 +128,14 @@ const Notes = () => {
         />
         <input
           type="datetime-local"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
+          value={start_date}
+          onChange={(e) => setStart_date(e.target.value)}
           required
         />
         <input
           type="datetime-local"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
+          value={end_date}
+          onChange={(e) => setEnd_date(e.target.value)}
           required
         />
         <textarea
