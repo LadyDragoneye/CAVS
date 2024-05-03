@@ -16,28 +16,25 @@ const Account = () => {
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-6 text-md-left"><label class="labels">Username:</label></div>
-                            <div class="col-md-6"><span>*User</span></div>
+                            <div class="col-md-6"><span>{User}</span></div>
                         </div>
                         <div className="row mt-3">
                             <div class="col-md-6"><label class="labels">First Name:</label></div>
-                            <div class="col-md-6"><span>*First Name</span></div>
+                            <div class="col-md-6"><span>{firstname}</span></div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-6"><label class="labels">Last Name:</label></div>
-                            <div class="col-md-6"><span>*Last Name</span></div>
+                            <div class="col-md-6"><span>{lastName}</span></div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-6"><label class="labels">Role:</label></div>
-                            <div class="col-md-6"><span>*Role</span></div>
+                            <div class="col-md-6"><span>{role}</span></div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-6"><label class="labels">Email:</label></div>
-                            <div class="col-md-6"><span>*Email</span></div>
+                            <div class="col-md-6"><span>{email}</span></div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 d-flex justify-content-center">
-                    <button type="button" class="btn btn-primary mb-3">Change Password</button>
                 </div>
             </div>
         </div>
