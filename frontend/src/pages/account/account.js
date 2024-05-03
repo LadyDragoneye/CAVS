@@ -14,19 +14,25 @@ const Account = () => {
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h4 class="text-right">Profile</h4>
                         </div>
-                        <div class="row mt-3">
+                        <div className="row mt-3">
                             <div className="col-md-6"><label className="labels">Username:</label></div>
-                            <div className="col-md-12"><label className="labels">First Name:</label></div>
-                            <div className="col-md-12"><label className="labels">Last Name:</label></div>
-                            <div className="col-md-12"><label className="labels">Role:</label></div>
-                            <div className="col-md-12"><label className="labels">Email:</label></div>
+                            <div className="col-md-6"><span>*User</span></div>
                         </div>
                         <div className="row mt-3">
-                            <div className="col-md-6"><span>User</span></div>
-                            <div className="col-md-12"><span>F</span></div>
-                            <div className="col-md-12"><span>F</span></div>
-                            <div className="col-md-12"><span>F</span></div>
-                            <div className="col-md-12"><span>Email</span></div>
+                            <div className="col-md-6"><label className="labels">First Name:</label></div>
+                            <div className="col-md-6"><span>*First Name</span></div>
+                        </div>
+                        <div className="row mt-3">
+                            <div className="col-md-6"><label className="labels">Last Name:</label></div>
+                            <div className="col-md-6"><span>*Last Name</span></div>
+                        </div>
+                        <div className="row mt-3">
+                            <div className="col-md-6"><label className="labels">Role:</label></div>
+                            <div className="col-md-6"><span>*Role</span></div>
+                        </div>
+                        <div className="row mt-3">
+                            <div className="col-md-6"><label className="labels">Email:</label></div>
+                            <div className="col-md-6"><span>*Email</span></div>
                         </div>
                     </div>
                 </div>
