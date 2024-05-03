@@ -1,0 +1,26 @@
+#aboutTitle{
+    align-items: center;
+    font-family: "IBM Plex Serif", serif;
+}
+#CAVStitle{
+    font-family: "IBM Plex Serif", serif;
+}
+h2{
+    align-content: center;
+    
+}
+img{
+    border-radius: 25%;
+    padding: 20px;
+    align-items: center;
+    align-content: center;
+}
+#learnButton{
+    font-family: "IBM Plex Serif", serif;
+    background-color:#4481B4;
+    font-size: 22px;
+}
+#info{
+    font-family: "IBM Plex Serif", serif;
+    font-size: 16px;
+}

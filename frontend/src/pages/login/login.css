@@ -26,4 +26,9 @@
 body{
     background-color:#d9e5f0;
 }
+h1{
+    font-family: "IBM Plex Serif", serif;
+    font-size: 32px;
+    font-weight: 420;
+}
 
