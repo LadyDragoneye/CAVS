@@ -1,8 +1,7 @@
 Make sure before pushing to the repo to run `docker-compose up --build` pls
 
-
-
 # Feb 7 -Brooks
+
 Connecting frontend to backend using axios and django REST framework
 prompt the user to input name and department
 Make sure to run `npm run build` before starting react app or else it wont start
@@ -20,19 +19,20 @@ as well as corseheaders to middleware and dictionaries
 
 The new users are currently being save to the default databse which is SQLite but it looks pretty easy to implement mysql or whatever we're going to use in settings.py
 
-
 # Feb 8 -Brooks
 
 After cloning the repository, switch to the frontend directory and run `npm install`
+
 # Feb 8 - Eric
+
     NOTE: Need to run:
         npm i react-router-dom --save styled-components
         npm install react-icons --save
         npm install bootstrap
+
 # Feb 8 - Brooks
-Then `docker-compose up --build` 
+
+Then `docker-compose up --build`
 Then after that you only need to run `docker-compose up` when you want to start it up again
-
-
 
 Now the front end should be served locally on port 3000, and backend on port 8000 and all will be formatted on save!

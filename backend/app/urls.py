@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from .views import UserNotesView
-
+from .views import delete_event_view
 from .views import user_received_notes
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
@@ -15,6 +15,7 @@ urlpatterns = [
     path('notes/', views.create_note, name='create_note'),
     path('user/notes/', UserNotesView.as_view(), name='user_notes'),
     path('notes/<int:event_id>/', views.update_note, name='update_note'),
+    path('notes/<int:event_id>/', delete_event_view, name='delete_event_view'),
     path('user/received_notes/', user_received_notes, name='user_received_notes'),
     path('', views.getRoutes),
 ]

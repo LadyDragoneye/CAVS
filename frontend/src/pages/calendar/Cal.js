@@ -26,6 +26,7 @@ const EventForm = ({ label, value, onChange }) => (
 
 
 
+
 const locales = {
     "en-US": require("date-fns/locale/en-US"),
 };
@@ -38,7 +39,7 @@ const localizer = dateFnsLocalizer({
 });
 
 const App = () => {
-  const [newEvent, setNewEvent] = useState({ subject: 'subject testing', start_date: '', end_date: '', caseNumber: '12121', body: 'testing things', recipient: 'user@gmail.com' });
+  const [newEvent, setNewEvent] = useState({ subject: '', start_date: '', end_date: '', caseNumber: '', body: '', recipient: '' });
   const [userNotes, setUserNotes] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [changesMade, setChangesMade] = useState(false); // State variable to track changes
@@ -153,7 +154,7 @@ const App = () => {
         { headers: { Authorization: `Bearer ${authTokens.access}` } }
       );
       console.log('Event created successfully:', response.data);
-      setNewEvent({ subject: 'subTesting', start_date: '', end_date: '', caseNumber: '32444', body: 'testing things', recipient: 'user@gmail.com' }); // Reset newEvent state
+      setNewEvent({ subject: '', start_date: '', end_date: '', caseNumber: '', body: '', recipient: '' }); // Reset newEvent state
       fetchUserNotes(); // Fetch user events after creating a new event
       fetchUserNotes(); // Fetch user events after creating a new event
 
@@ -185,10 +186,32 @@ const App = () => {
     }
   };
   
+
+
+
+  const handleDeleteEvent = async (eventId) => {
+    try {
+      if (!authTokens || !selectedEvent) {
+        console.error('User is not authenticated or no event selected.');
+        return;
+      }
+
+      const response = await axios.delete(`http://localhost:8000/app/notes/${eventId}/`, {
+        headers: { Authorization: `Bearer ${authTokens.access}` },
+      });
+
+      console.log('Event deleted successfully:', response.data);
+      fetchUserNotes(); // Fetch user notes after deleting the event
+    } catch (error) {
+      console.error('Error deleting event:', error);
+    }
+  };
+
+
   return (
     <div className="App">
-      <h1>Calendar</h1>
-      <h2>Add New Event</h2>
+      <h1>Trial Dates</h1>
+      <h2>Add a New Date</h2>
       <div>
         <EventForm label="Subject" value={newEvent.subject} onChange={(value) => setNewEvent({ ...newEvent, subject: value })} />
         <EventForm label="Case Number" value={newEvent.caseNumber} onChange={(value) => setNewEvent({ ...newEvent, caseNumber: value })} />
@@ -257,6 +280,7 @@ const App = () => {
             <p><strong>Confirmed Attendance:</strong> {selectedEvent.confirmed_attendance ? 'Yes' : 'No'}</p> 
           </div>
           <button className="confirm-btn" onClick={() => handleConfirmAttendance(selectedEvent)}>Confirm Attendance</button>
+          <button className="delete-btn" onClick={() => handleDeleteEvent(selectedEvent.id)}>Delete Event</button>
           <button className="close-btn" onClick={() => setSelectedEvent(null)}>Close</button>
         </div>
       )}

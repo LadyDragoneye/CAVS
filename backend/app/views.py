@@ -168,3 +168,27 @@ def user_received_notes(request):
     serializer = NoteSerializer(received_notes, many=True)
     return Response(serializer.data)
 
+
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_event_view(request, event_id):
+    try:
+        # Ensure that the event exists
+        event = get_object_or_404(Note, id=event_id)
+
+        # Ensure that the user has permission to delete the event
+        # if request.user != event.user:
+        #     return JsonResponse({'error': 'You are not allowed to delete this event.'}, status=status.HTTP_403_FORBIDDEN)
+
+        # If a confirmation flag is not set in the request data, return a response indicating that confirmation is required
+        if not request.data.get('confirmed'):
+            return JsonResponse({'error': 'Confirmation required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Delete the event
+        event.delete()
+
+        return JsonResponse({'message': 'Event deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
