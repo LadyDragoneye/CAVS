@@ -2,18 +2,19 @@ import React, { Component } from 'react'; // Import React and Component from 're
 import {
   Route,
   BrowserRouter as Router,
-  Routes,
+  Routes
 } from "react-router-dom";
 import Navbar from "./components/";
-import Contact from "./pages/contact/contact";
+import { AuthProvider } from './context/AuthContext';
 import FAQ from "./pages/FAQ/FAQ";
-
+import Account from "./pages/account/account";
+import Cal from "./pages/calendar/Cal";
+import Contact from "./pages/contact/contact";
 import Home from "./pages/home/home";
 import Login from "./pages/login/login";
 import SignUp from "./pages/signup/signup";
-import Cal from "./pages/calendar/Cal";
-import PrivateRoutes from './utils/PrivateRoutes'
-import { AuthProvider } from './context/AuthContext'
+import PrivateRoutes from './utils/PrivateRoutes';
+import PrivateRoutesAuthenticated from './utils/PrivateRoutesAuthenticated';
 
 class App extends Component {  // Define a new class component named App
   
@@ -23,29 +24,30 @@ class App extends Component {  // Define a new class component named App
   };
 
   render() {  // Render method to render component UI
-    return (  // JSX markup for component UI
-      <Router>
-          <Navbar />
+    // Check if user is authenticated
+
+      return (  // JSX markup for component UI
+        <Router>
           <AuthProvider>
+          <Navbar />
             <Routes>
-            
-              
-              <Route element={<PrivateRoutes />}>
-                <Route element={<Home />} path="/" exact/>
-                <Route element={<Contact />} path="/contact"/>
+
+              <Route element={<PrivateRoutesAuthenticated/>}>
+                <Route path={"/login"} element={<Login />}/>
+                <Route path={"/sign-up"} element={<SignUp />}/>
               </Route>
               <Route exact path="/" element={<Home />} />
               <Route path="/FAQ" element={<FAQ />} />
-
               <Route path="/contact" element={<Contact />} />
-              <Route path="/sign-up" element={<SignUp />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/cal" element={<Cal />} />
+              <Route element={<PrivateRoutes/>}>
+                <Route path="/account" element={<Account />}/>
+                <Route path="/cal" element={<Cal />}/>
+              </Route>
           </Routes>
           </AuthProvider>
+        </Router>
+      );
 
-      </Router>
-    );
   }
 }
 
