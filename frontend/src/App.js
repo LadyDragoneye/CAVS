@@ -13,6 +13,7 @@ import Contact from "./pages/contact/contact";
 import Home from "./pages/home/home";
 import Login from "./pages/login/login";
 import SignUp from "./pages/signup/signup";
+import VoiceMemo from './pages/voicememo/voicememo';
 import PrivateRoutes from './utils/PrivateRoutes';
 import PrivateRoutesAuthenticated from './utils/PrivateRoutesAuthenticated';
 
@@ -42,6 +43,7 @@ class App extends Component {  // Define a new class component named App
               <Route element={<PrivateRoutes/>}>
                 <Route path="/account" element={<Account />}/>
                 <Route path="/cal" element={<Cal />}/>
+                <Route path="/voicememo" element={<VoiceMemo />}/>
               </Route>
           </Routes>
           </AuthProvider>

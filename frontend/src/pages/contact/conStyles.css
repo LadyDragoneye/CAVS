@@ -1,0 +1,17 @@
+*{
+    font-family: "IBM Plex Serif", serif;
+}
+
+#contactTitle{
+    
+
+}
+#contactForm{
+    border-radius: 16px;
+}
+.form-group{
+    border-radius: 16px;
+}
+#hey{
+    border-radius: 2rem;
+}
