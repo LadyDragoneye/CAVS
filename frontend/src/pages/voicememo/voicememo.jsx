@@ -1,6 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import { React, useEffect, useRef, useState } from 'react';
 import "stream";
 import './voicememo.css';
+// Uncomment one of the following import options:
+import AWS from 'aws-sdk'; // Import entire SDK (optional)
+// import AWS from 'aws-sdk/global'; // Import global AWS namespace (recommended)
+import S3 from 'aws-sdk/clients/s3'; // Import only the S3 client
+// Uncomment one of the following import options:
+// import AWS from 'aws-sdk/global'; // Import global AWS namespace (recommended)
 
 // used https://mdn.github.io/dom-examples/media/web-dictaphone/, took a lot of work to get it working with react
 
@@ -11,6 +17,21 @@ import './voicememo.css';
         const soundClips = useRef('.soundClips');
         const canvas = useRef('.canvas');
         const mainSection = useRef('.mainSection');
+
+        const [file, setFile] = useState(null);
+        const [uploading, setUploading] = useState(false);
+        const [deleting, setDeleting] = useState(false);
+
+        const allowedTypes = [
+            'image/jpeg',
+            'image/png',
+            'application/pdf',
+            'video/mp4',
+            'video/quicktime',
+            'audio/mpeg',
+            'audio/wav',
+            // Add more supported types as needed
+          ];
 
         useEffect(() => {
 
@@ -71,6 +92,18 @@ import './voicememo.css';
                     audio.setAttribute("controls", "");
                     deleteButton.textContent = "Delete";
                     deleteButton.className = "delete";
+                    
+                    clipContainer.appendChild(audio);
+                    clipContainer.appendChild(clipLabel);
+                    clipContainer.appendChild(deleteButton);
+                    soundClips.current.appendChild(clipContainer);
+
+                    audio.controls = true;
+                    const audio_blob = new Blob(chunks, { type: mediaRecorder.mimeType });
+                    chunks = [];
+                    const audioURL = window.URL.createObjectURL(audio_blob);
+                    audio.src = audioURL;
+                    console.log("recorder stopped");
 
                     if (clipName === null) {
                         clipLabel.textContent = "My unnamed clip";
@@ -78,21 +111,44 @@ import './voicememo.css';
                         clipLabel.textContent = clipName;
                     }
 
-                    clipContainer.appendChild(audio);
-                    clipContainer.appendChild(clipLabel);
-                    clipContainer.appendChild(deleteButton);
-                    soundClips.current.appendChild(clipContainer);
+                    const S3_BUCKET = "audioupload-s3bucket"; // Replace with your bucket name
+                    const REGION = "us-east-1"; // Replace with your region
+                
+                    AWS.config.update({
+                      accessKeyId: "AKIA5FTZAL2RMMTD5KOH",
+                      secretAccessKey: "V2GaSaYC7HSmAh5wHDUzmZAFKg64jRT/uVEXUFnb",
+                    });
+                
+                    const s3 = new S3({
+                      params: { Bucket: S3_BUCKET },
+                      region: REGION,
+                    });
 
-                    audio.controls = true;
-                    const blob = new Blob(chunks, { type: mediaRecorder.mimeType });
-                    chunks = [];
-                    const audioURL = window.URL.createObjectURL(blob);
-                    audio.src = audioURL;
-                    console.log("recorder stopped");
+                    const params_del = {
+                        Bucket: S3_BUCKET,
+                        Key: clipName + '.wav'
+                      };
 
-                    deleteButton.onclick = function (e) {
-                        e.target.closest(".clip").remove();
+                      const params_up = {
+                        Bucket: S3_BUCKET,
+                        Key: clipName + '.wav',
+                        Body: audio_blob,
+                      };
+
+                    deleteButton.onclick = async (e) => {      
+                                s3.deleteObject(params_del, function(err,data) {
+                                    console.log(err, data) 
+                                  }).promise();
+                                e.target.closest(".clip").remove();
+                                alert("File deleted successfully.");
                     };
+
+                    const uploadFile = async() => {
+                          s3.upload(params_up, function(err,data) {
+                            console.log(err, data)
+                          }).promise();
+                          alert("File uploaded successfully.");
+                      };
 
                     clipLabel.onclick = function () {
                         const existingName = clipLabel.textContent;
@@ -103,11 +159,15 @@ import './voicememo.css';
                             clipLabel.textContent = newClipName;
                         }
                     };
+                    
+                    uploadFile();
+                    
                 };
 
                 mediaRecorder.ondataavailable = function (e) {
                     chunks.push(e.data);
                 };
+
             };
 
             let onError = function (err) {
@@ -170,39 +230,37 @@ import './voicememo.css';
                 canvasCtx.lineTo(canvas.current.width, canvas.current.height / 2);
                 canvasCtx.stroke();
             }
+            
         }
 
         window.onresize = function () {
             canvas.current.width = mainSection.current.offsetWidth;
         };
 
+        
+
         window.onresize();
     }, [])
         return (
-            <div>
-                    <div class="wrapper">
+                <div className="wrapper">
 
-                        <header>
-                            <h1>Web dictaphone</h1>
-                        </header>
+                    <header>
+                        <h1>Create Confirmation Voice Memo</h1>
+                        <h3>State your name, the name of the case, the date, that you will be in attendance. </h3>
+                    </header>
 
-                        <section class="main-controls" ref= { mainSection }>
-                            <canvas class="visualizer" ref = { canvas } height="60px"></canvas>
-                            <div id="buttons">
-                                <button class="record" ref = { record }>Record</button>
-                                <button class="stop" ref = { stop }>Stop</button>
-                            </div>
-                        </section>
+                    <section className="main-controls" ref= { mainSection }>
+                        <canvas className="visualizer" ref = { canvas } height="60px"></canvas>
+                        <div id="buttons">
+                            <button className="record" ref = { record }>Record</button>
+                            <button className="stop" ref = { stop }>Stop</button>
+                        </div>
+                    </section>
 
-                        <section class="sound-clips" ref= { soundClips }>
+                    <section className="sound-clips" ref= { soundClips }>
 
+                    </section>
 
-                        </section>
-
-                    </div>
-
-                    <label for="toggle">❔</label>
-                    <input type="checkbox" id="toggle"></input>
                 </div>
         );
     };
