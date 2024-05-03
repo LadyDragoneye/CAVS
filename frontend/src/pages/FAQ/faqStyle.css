@@ -1,0 +1,21 @@
+.card{
+    font-size: 18px;
+}
+
+.accordion{
+    background-color: blueviolet;
+    font-size: 18px;
+    size: 30px;
+}
+
+.accordion.body {
+    font-size: 30px;
+}
+
+.accordion.header {
+    font-size: 50px;
+}
+
+.card-header{
+    font-size: 18px;
+}

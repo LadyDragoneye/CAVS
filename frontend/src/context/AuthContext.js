@@ -1,6 +1,6 @@
-import { createContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
-import { useNavigate } from 'react-router-dom'
+import { createContext, useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 const AuthContext = createContext()
 
 // 1:20:23
@@ -16,13 +16,10 @@ export const AuthProvider = ({children}) => {
 
     let history = useNavigate()
 
-
-
-    
     let loginUser = async (e )=> {
         e.preventDefault()
         console.log('Form submitted')
-        let response = await fetch('http://localhost:8001/app/token/', {
+        let response = await fetch('http://localhost:8000/app/token/', {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -49,7 +46,7 @@ export const AuthProvider = ({children}) => {
         console.log('Sign-up form submitted');
     
         // Fetch API call to sign up the user
-        let response = await fetch('http://localhost:8001/app/register/', {
+        let response = await fetch('http://localhost:8000/app/register/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -90,7 +87,7 @@ export const AuthProvider = ({children}) => {
     }
     let updateToken = async ()=> {
 
-        let response = await fetch('http://localhost:8001/app/token/refresh/', {
+        let response = await fetch('http://localhost:8000/app/token/refresh/', {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -119,7 +116,7 @@ export const AuthProvider = ({children}) => {
         authTokens:authTokens,
         loginUser:loginUser,
         signupUser:signupUser,
-        // logoutUser:logoutUser, // need to add logout button
+        logoutUser:logoutUser, // need to add logout button
     }
 
     useEffect(()=> {
