@@ -50,7 +50,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('emails', 'username', 'password', 'password2')
+        fields = ('email', 'username', 'password', 'password2')
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
@@ -77,6 +77,6 @@ class NoteSerializer(serializers.ModelSerializer):
     subject = serializers.CharField()  # Add this line to include the subject field
     class Meta:
         model = Note
-        fields = ['id', 'user', 'recipient', 'subject', 'body', 'created_at', 'caseNumber', 'start_date', 'end_date', 'confirmed_attendance']
+        fields = ['id', 'user', 'recipient', 'subject', 'body', 'created_at', 'centralComplaint', 'start_date', 'end_date', 'confirmed_attendance']
 
 

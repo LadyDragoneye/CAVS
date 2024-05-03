@@ -95,7 +95,7 @@ def create_note(request):
         recipient = get_object_or_404(User, email=recipient_email)
         body = request.data.get('body', '')
         subject = request.data.get('subject', '')  # Add this line to get the subject from request data
-        caseNumber = request.data.get('caseNumber', None)  # Add this line
+        centralComplaint = request.data.get('centralComplaint', None)  # Add this line
         start_date = request.data.get('start_date', None)
         end_date = request.data.get('end_date', None)
         confirmed_attendance = request.data.get('confirmed_attendance', False)  # Set default value to False if not provided
@@ -105,7 +105,7 @@ def create_note(request):
         if not end_date:
             end_date = timezone.now()
         if body:
-            note = Note.objects.create(user=user, recipient=recipient, body=body, subject=subject, caseNumber=caseNumber, start_date=start_date, end_date=end_date, confirmed_attendance=confirmed_attendance)
+            note = Note.objects.create(user=user, recipient=recipient, body=body, subject=subject, centralComplaint=centralComplaint, start_date=start_date, end_date=end_date, confirmed_attendance=confirmed_attendance)
             serializer = NoteSerializer(note)
             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
         else:
@@ -124,7 +124,7 @@ def update_note(request, event_id):
     
     body = request.data.get('body')
     subject = request.data.get('subject')
-    caseNumber = request.data.get('caseNumber')
+    centralComplaint = request.data.get('centralComplaint')
     start_date = request.data.get('start_date')
     end_date = request.data.get('end_date')
     confirmed_attendance = request.data.get('confirmed_attendance')
@@ -136,8 +136,8 @@ def update_note(request, event_id):
         note.body = body
     if subject is not None:
         note.subject = subject
-    if caseNumber is not None:
-        note.caseNumber = caseNumber
+    if centralComplaint is not None:
+        note.centralComplaint = centralComplaint
     if start_date is not None:
         note.start_date = start_date
     if end_date is not None:
@@ -148,17 +148,19 @@ def update_note(request, event_id):
     serializer = NoteSerializer(note)
     return JsonResponse(serializer.data, status=status.HTTP_200_OK)
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def user_notes(request):
-    if request.method == 'GET':
-        user = request.user
-        notes = Note.objects.filter(recipient=user)
-        serialized_notes = NoteSerializer(notes, many=True).data
-        for note in serialized_notes:
-            note['sender_email'] = note['user']
-
-        return Response(serialized_notes)
+@api_view(['PATCH'])
+@permission_classes([AllowAny])  # Set permission_classes to AllowAny
+def update_note(request, event_id):
+    # Handle note update logic here
+    note = get_object_or_404(Note, id=event_id)
+    
+    # Set confirmed_attendance to True for any request, regardless of user authentication
+    note.confirmed_attendance = True
+    
+    note.save()
+    
+    serializer = NoteSerializer(note)
+    return JsonResponse(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

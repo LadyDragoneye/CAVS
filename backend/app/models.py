@@ -49,7 +49,7 @@ class Note(models.Model):
     subject = models.CharField(max_length=200)  # Default value added here
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    caseNumber = models.CharField(max_length=200, default='123', validators=[RegexValidator(regex='^[0-9]*$', message='Case number must contain only numeric characters.', code='invalid_casenumber')])
+    centralComplaint = models.CharField(max_length=200, default='123', validators=[RegexValidator(regex='^[0-9]*$', message='Central Complaint must contain only numeric characters.', code='invalid_centralComplaint')])
     start_date = models.DateTimeField(blank=True, null=True)  # No default value
     end_date = models.DateTimeField(blank=True, null=True)  # No default value
     confirmed_attendance = models.BooleanField(default=False)  # New field for confirmed attendance
@@ -57,4 +57,4 @@ class Note(models.Model):
     def __str__(self):
         sender = self.user.username if self.user else "Unknown"
         recipient = self.recipient.username if self.recipient else "Unknown"
-        return f"From: {sender}, To: {recipient}, Subject: {self.subject}, caseNumber: {self.caseNumber}, start_date: {self.start_date}, end_date: {self.end_date}, Confirmed Attendance: {self.confirmed_attendance}"
+        return f"From: {sender}, To: {recipient}, Subject: {self.subject}, centralComplaint: {self.centralComplaint}, start_date: {self.start_date}, end_date: {self.end_date}, Confirmed Attendance: {self.confirmed_attendance}"

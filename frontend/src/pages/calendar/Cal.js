@@ -39,7 +39,7 @@ const localizer = dateFnsLocalizer({
 });
 
 const App = () => {
-  const [newEvent, setNewEvent] = useState({ subject: '', start_date: '', end_date: '', caseNumber: '', body: '', recipient: '' });
+  const [newEvent, setNewEvent] = useState({ subject: '', start_date: '', end_date: '', centralComplaint: '', body: '', recipient: '' });
   const [userNotes, setUserNotes] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [changesMade, setChangesMade] = useState(false); // State variable to track changes
@@ -134,7 +134,7 @@ const App = () => {
       console.log('Attempting to create event...');
       console.log('Subject:', newEvent.subject); // Log the title state
 
-      console.log('Case Number:', newEvent.caseNumber); // Log the case number state
+      console.log('Central Complaint:', newEvent.centralComplaint); // Log the case number state
       console.log('Body:', newEvent.body); // Log the body state
       console.log('Recipient:', newEvent.recipient); // Log the recipient state
       const startDateISO = formatDateObjectToISOString(newEvent.start_date);
@@ -147,14 +147,14 @@ const App = () => {
           subject: newEvent.subject, 
           start_date: startDateISO, // Use ISO string format
           end_date: endDateISO, // Use ISO string format
-          caseNumber: newEvent.caseNumber, 
+          centralComplaint: newEvent.centralComplaint, 
           body: newEvent.body, 
           recipient: newEvent.recipient 
         },
         { headers: { Authorization: `Bearer ${authTokens.access}` } }
       );
       console.log('Event created successfully:', response.data);
-      setNewEvent({ subject: '', start_date: '', end_date: '', caseNumber: '', body: '', recipient: '' }); // Reset newEvent state
+      setNewEvent({ subject: '', start_date: '', end_date: '', centralComplaint: '', body: '', recipient: '' }); // Reset newEvent state
       fetchUserNotes(); // Fetch user events after creating a new event
       fetchUserNotes(); // Fetch user events after creating a new event
 
@@ -169,15 +169,13 @@ const App = () => {
 
   const handleConfirmAttendance = async () => {
     try {
-      if (!authTokens || !selectedEvent) {
-        console.error('User is not authenticated or no event selected.');
+      if (!selectedEvent) {
+        console.error('No event selected.');
         return;
       }
   
       const queryParams = new URLSearchParams({ confirmed_attendance: true }); // Construct query parameters
-      const response = await axios.patch(`http://localhost:8000/app/notes/${selectedEvent.id}/?${queryParams}`, null, {
-        headers: { Authorization: `Bearer ${authTokens.access}` },
-      });
+      const response = await axios.patch(`http://localhost:8000/app/notes/${selectedEvent.id}/?${queryParams}`);
   
       console.log('Attendance confirmed successfully:', response.data);
       setSelectedEvent({ ...selectedEvent, confirmed_attendance: true });
@@ -214,7 +212,7 @@ const App = () => {
       <h2>Add a New Date</h2>
       <div>
         <EventForm label="Subject" value={newEvent.subject} onChange={(value) => setNewEvent({ ...newEvent, subject: value })} />
-        <EventForm label="Case Number" value={newEvent.caseNumber} onChange={(value) => setNewEvent({ ...newEvent, caseNumber: value })} />
+        <EventForm label="Central Complaint" value={newEvent.centralComplaint} onChange={(value) => setNewEvent({ ...newEvent, centralComplaint: value })} />
         <EventForm label="Recipient" value={newEvent.recipient} onChange={(value) => setNewEvent({ ...newEvent, recipient: value })} />
         <textarea
           placeholder="Add Body"
