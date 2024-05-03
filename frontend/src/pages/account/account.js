@@ -15,11 +15,18 @@ const Account = () => {
                             <h4 class="text-right">Profile</h4>
                         </div>
                         <div class="row mt-3">
-                        <div class="col-md-6"><label class="labels">Username:</label></div>
-                            <div class="col-md-12"><label class="labels">First Name:</label></div>
-                            <div class="col-md-12"><label class="labels">Last Name:</label></div>
-                            <div class="col-md-12"><label class="labels">Role:</label></div>
-                            <div class="col-md-12"><label class="labels">Email:</label></div>
+                            <div className="col-md-6"><label className="labels">Username:</label></div>
+                            <div className="col-md-12"><label className="labels">First Name:</label></div>
+                            <div className="col-md-12"><label className="labels">Last Name:</label></div>
+                            <div className="col-md-12"><label className="labels">Role:</label></div>
+                            <div className="col-md-12"><label className="labels">Email:</label></div>
+                        </div>
+                        <div className="row mt-3">
+                            <div className="col-md-6"><span>User</span></div>
+                            <div className="col-md-12"><span>F</span></div>
+                            <div className="col-md-12"><span>F</span></div>
+                            <div className="col-md-12"><span>F</span></div>
+                            <div className="col-md-12"><span>Email</span></div>
                         </div>
                     </div>
                 </div>
