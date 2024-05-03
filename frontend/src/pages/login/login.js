@@ -30,7 +30,7 @@ const Login = () => {
 
         <body class="text-center">
         <img src={logo} alt="CAVS logo" height={125} width={125}></img>
-        <h1 id="signInfo">Please sign in</h1>
+        <h1 class="h3 mb-3 font-weight-normal" id="signInfo">Please sign in</h1>
 
         <div>
             <form onSubmit={loginUser}>

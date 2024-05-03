@@ -47,5 +47,11 @@
     font-size: 26px;
     
 }
+.card{
+    font-family: "IBM Plex Serif", serif;
+}
+.card-header{
+    font-size: 32px;
+}
 
 

@@ -28,7 +28,7 @@ const FAQ = () => {
                     <div class="card-header" id="headingOne">
                     <h5 class="mb-0">
                         <Accordion.Item eventKey="0">
-                        <Accordion.Header style={{alignItems: "center"}}>How do I get started?</Accordion.Header>
+                        <Accordion.Header>How do I get started?</Accordion.Header>
                         <Accordion.Body> Getting started is easy! All you have to do is register your account to gain access to all features including the calendar.</Accordion.Body>
                         </Accordion.Item>
                     </h5>
